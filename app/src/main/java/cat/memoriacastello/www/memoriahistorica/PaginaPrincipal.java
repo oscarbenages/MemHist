@@ -118,12 +118,6 @@ public class PaginaPrincipal extends AppCompatActivity {
                 MainActivity.test[tots++] = MainActivity.preguntes[alea];
             }
         }
-
-        //És necesari?
-        /*
-        for (DadesPregunta preg : MainActivity.test)
-            preg.setEstat(0);
-        */
     }
 
     public void obre_pregunta(View v, int idx){
