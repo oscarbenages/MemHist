@@ -12,6 +12,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,51 +47,62 @@ public class MainActivity extends AppCompatActivity {
         p1et2 = (EditText) findViewById(R.id.p1et2);
 
         lligDades();
-        String[] archivos = fileList();
 
-        if (existe(archivos, "historial.txt"))
-            try {
-                InputStreamReader archivo = new InputStreamReader(
-                        openFileInput("historial.txt"));
-                BufferedReader br = new BufferedReader(archivo);
-                String linea = null;
-                try {
-                    linea = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                String todo = "";
-                while (linea != null) {
-                    todo = todo + linea + "\n";
-                    linea = br.readLine();
-                }
-                br.close();
-                archivo.close();
-            } catch (IOException e) {
-            }
-        grabar("25/08/2017 22:24");
+        lligFitxer("historial");
+        Date data = new Date();
+        DateFormat ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
+        desaFitxer("historial", ara.format(data));
     }
 
-    private boolean existe(String[] archivos, String archbusca) {
-        for (int f = 0; f < archivos.length; f++)
-            if (archbusca.equals(archivos[f]))
+    private boolean existix(String f) {
+        for (String fitxer : fileList())
+            if (f.equals(fitxer))
                 return true;
         return false;
     }
-    public void grabar(String s) {
-        try {
-            OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput(
-                    "historial.txt", Activity.MODE_APPEND));
-            archivo.write(s);
-            archivo.flush();
-            archivo.close();
-        } catch (IOException e) {
-        }
-        Toast t = Toast.makeText(this, "Los datos fueron grabados",
-                Toast.LENGTH_SHORT);
-        t.show();
+
+    public String[] lligFitxer(String f){
+        String nomFitxer = String.format("%s.txt", f);
+        String tot = "";
+        if (existix(nomFitxer))
+            try {
+                InputStreamReader fitxer = new InputStreamReader(
+                        openFileInput(nomFitxer)
+                );
+                BufferedReader br = new BufferedReader(fitxer);
+                String línia = null;
+                try {
+                    línia = br.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                while (línia != null) {
+                    tot += línia + "\n";
+                    línia = br.readLine();
+                }
+                br.close();
+                fitxer.close();
+            } catch (IOException ignored) {
+            }
+        return tot.split("\n");
     }
 
+    public void desaFitxer(String f, String s) {
+        String nomFitxer = String.format("%s.txt", f);
+        try {
+            OutputStreamWriter fitxer = new OutputStreamWriter(
+                    openFileOutput(
+                            nomFitxer, Activity.MODE_APPEND
+                    )
+            );
+            fitxer.write(s+"\n");
+            fitxer.flush();
+            fitxer.close();
+        } catch (IOException ignored) {
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
     private void lligDades() {
         /*
         TODO: fer que després de llegir les dades canvie l'ordre tant de les preguntes com
@@ -101,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         */
 
         String msg = "";
-        Scanner fitxer = null;
+        Scanner fitxer;
         try {
             fitxer = new Scanner(getResources().openRawResource(R.raw.preguntes));
             String línia;
