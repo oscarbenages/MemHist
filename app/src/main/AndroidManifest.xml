@@ -9,19 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PaginaPrincipal" />
-        <activity android:name=".ApropDe" />
-        <activity android:name=".Pregunta" />
-        <activity android:name=".Resultats" />
-        <activity android:name=".Professor" />
-        <activity android:name=".Historial"></activity>
+        <activity android:name=".PaginaPrincipal"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ApropDe"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Pregunta"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Resultats"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Professor"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Historial"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
