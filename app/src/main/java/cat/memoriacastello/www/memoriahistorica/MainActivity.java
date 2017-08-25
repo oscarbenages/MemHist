@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 archivo.close();
             } catch (IOException e) {
             }
-        grabar("25/08/2017");
+        grabar("25/08/2017 22:24");
     }
 
     private boolean existe(String[] archivos, String archbusca) {
