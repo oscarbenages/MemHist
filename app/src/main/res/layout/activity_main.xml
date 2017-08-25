@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cat.memoriacastello.www.memoriahistorica.MainActivity">
+
+    <TextView
+        android:id="@+id/p1tv1"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:text="Hola,\nIntroduïx el teu nom i edat i comença el concurs."
+        tools:textSize="18sp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="53dp"
+        android:layout_marginEnd="53dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="36dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="53dp" />
+
+    <EditText
+        android:id="@+id/p1et1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nom"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="52dp"
+        app:layout_constraintTop_toBottomOf="@+id/p1tv1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/p1et2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Edat"
+        android:inputType="number"
+        android:singleLine="true"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/p1et1"
+        android:layout_marginTop="39dp"
+        app:layout_constraintTop_toBottomOf="@+id/p1et1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/p1et1" />
+
+    <Button
+        android:id="@+id/p1b1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="inicia"
+        android:text="Inicia"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="109dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="108dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/p1et2" />
+
+    <TextView
+        android:id="@+id/p1tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="apropDe"
+        android:text="A prop de l'app."
+        android:textAlignment="textStart"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="54dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="54dp" />
+
+</android.support.constraint.ConstraintLayout>

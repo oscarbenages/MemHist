@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cat.memoriacastello.www.memoriahistorica.PaginaPrincipal"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+    <TextView
+        android:id="@+id/p2tv2"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="5dp"
+        android:text="puntuació: 0"
+        app:layout_constraintBottom_toTopOf="@+id/p2tv1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+
+    <TextView
+        android:id="@+id/p2tv1"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:text="Contesteu a les següents preguntes"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/p2b4"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="39dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="31dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
+
+    <Button
+        android:id="@+id/p2b1"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="94dp"
+        android:onClick="pregunta1"
+        android:text="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <Button
+        android:id="@+id/p2b2"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="95dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="95dp"
+        android:layout_marginStart="95dp"
+        android:onClick="pregunta2"
+        android:text="2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b1"
+        app:layout_constraintLeft_toLeftOf="@+id/p2tv1"
+        app:layout_constraintRight_toRightOf="@+id/p2b22"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b3"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginLeft="79dp"
+        android:layout_marginRight="79dp"
+        android:layout_marginStart="79dp"
+        android:onClick="pregunta3"
+        android:text="3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b2"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b2"
+        app:layout_constraintRight_toRightOf="@+id/p2b4"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b4"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:onClick="pregunta4"
+        android:text="4"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b3"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b8"
+        app:layout_constraintRight_toRightOf="@+id/p2b8"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b5"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:onClick="pregunta5"
+        android:text="5"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b6"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b1"
+        app:layout_constraintRight_toRightOf="@+id/p2b1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+
+    <Button
+        android:id="@+id/p2b6"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:onClick="pregunta6"
+        android:text="6"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b7"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b2"
+        app:layout_constraintRight_toRightOf="@+id/p2b2"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b7"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:onClick="pregunta7"
+        android:text="7"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b8"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b3"
+        app:layout_constraintRight_toRightOf="@+id/p2b3"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b8"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="pregunta8"
+        android:text="8"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b12"
+        app:layout_constraintRight_toRightOf="@+id/p2b12"
+        app:layout_constraintTop_toBottomOf="@+id/p2b4"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <Button
+        android:id="@+id/p2b9"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:onClick="pregunta9"
+        android:text="9"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b5"
+        app:layout_constraintRight_toRightOf="@+id/p2b5"
+        app:layout_constraintTop_toBottomOf="@+id/p2b5"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <Button
+        android:id="@+id/p2b10"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:onClick="pregunta10"
+        android:text="10"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b6"
+        app:layout_constraintRight_toRightOf="@+id/p2b6"
+        app:layout_constraintTop_toBottomOf="@+id/p2b6"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+
+    s
+
+
+    <Button
+        android:id="@+id/p2b11"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:onClick="pregunta11"
+        android:text="11"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b10"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b7"
+        app:layout_constraintRight_toRightOf="@+id/p2b7"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b12"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:onClick="pregunta12"
+        android:text="12"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b11"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b16"
+        app:layout_constraintRight_toRightOf="@+id/p2b16"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b13"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:onClick="pregunta13"
+        android:text="13"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b14"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b9"
+        app:layout_constraintRight_toRightOf="@+id/p2b9"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b14"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:onClick="pregunta14"
+        android:text="14"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b15"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b10"
+        app:layout_constraintRight_toRightOf="@+id/p2b10"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b15"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:onClick="pregunta15"
+        android:text="15"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b16"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b11"
+        app:layout_constraintRight_toRightOf="@+id/p2b11"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+
+    <Button
+        android:id="@+id/p2b16"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="11dp"
+        android:onClick="pregunta16"
+        android:text="16"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p2b12"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <Button
+        android:id="@+id/p2b17"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:onClick="pregunta17"
+        android:text="17"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b18"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b13"
+        app:layout_constraintRight_toRightOf="@+id/p2b13"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b18"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:onClick="pregunta18"
+        android:text="18"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b19"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b14"
+        app:layout_constraintRight_toRightOf="@+id/p2b14"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b19"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:onClick="pregunta19"
+        android:text="19"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b20"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b15"
+        app:layout_constraintRight_toRightOf="@+id/p2b15"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/p2b20"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="9dp"
+        android:onClick="pregunta20"
+        android:text="20"
+        app:layout_constraintLeft_toLeftOf="@+id/p2b16"
+        app:layout_constraintRight_toRightOf="@+id/p2b16"
+        app:layout_constraintTop_toBottomOf="@+id/p2b16"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <Button
+        android:id="@+id/p2b22"
+        android:layout_width="95dp"
+        android:layout_height="49dp"
+        android:onClick="resultat"
+        android:text="resultat"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintLeft_toRightOf="@+id/p2b21"
+        android:layout_marginLeft="19dp" />
+
+    <Button
+        android:id="@+id/p2b21"
+        android:layout_width="95dp"
+        android:layout_height="50dp"
+        android:onClick="inici"
+        android:text="arrere"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p2b22"
+        android:layout_marginStart="85dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="85dp" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,52 @@
+# El fitxer conté les preguntes, respostes possibles, la resposta correcta i si s'escau el nom
+# d'una imatge
+#
+# Els diferents items se separen mitjançant tabulador.
+# utilitzem \n per al salt de línia i \t per al tabulador en cas que feren falta en algun enunciat.
+#
+# L'índex de la resposta correcta comença per 1 (pot ser 1, 2 o 3, no es gasta el 0).
+#
+# Els comentaris comencen per '#', és a dir, les línies que comencen per '#' són ignorades.
+#
+Qui fou Euclides?	un escupltor grec	un romà	un matemàtic grec	3	Imatge1
+Quants dies dura un cicle lunar	29 dies	28 dies	31 dies	2
+A l'inici de la pel·lícula de Superman,\nquin planeta eix?	Kripton	Klingon	Basilea	1
+Quins elefants no tenen ivori?	els mascles	les femelles	les cries	3
+L'or és un metall preciós?	Els metalls no es classifiquen així	és un metall noble.	cap de les anteriors és correcta	1
+La paraula semàntica és d'origen...	grec	llatí	indoeuropeu	1	Imatge2
+La duració de la bateria depén de...	Les mides de pantalla	La brillantor de la pantalla	d'ambdues	3
+La semiòtica és la ciència que estudia...	El significat de les paraules	Els diferents signes d'un idioma	cap de les anteriors	2
+Quants ull té una aranya	huit	dos	dotze	1
+Enunciat10 r2	resposta1	resposta2	resposta3	2
+Enunciat11 r3	resposta1	resposta2	resposta3	3
+Enunciat12 r1	resposta1	resposta2	resposta3	1	Imatge3
+Enunciat13 r1	resposta1	resposta2	resposta3	1
+Enunciat14 r2	resposta1	resposta2	resposta3	2
+Enunciat15 r1	resposta1	resposta2	resposta3	1
+Enunciat16 r3	resposta1	resposta2	resposta3	3
+Enunciat17 r2	resposta1	resposta2	resposta3	2	Imatge4
+Enunciat18 r3	resposta1	resposta2	resposta3	3
+Enunciat19 r1	resposta1	resposta2	resposta3	1
+Enunciat20 r2	resposta1	resposta2	resposta3	2
+Enunciat21 r2	resposta1	resposta2	resposta3	2
+Enunciat22 r3	resposta1	resposta2	resposta3	3
+Enunciat23 r1	resposta1	resposta2	resposta3	1	Imatge3
+Enunciat24 r1	resposta1	resposta2	resposta3	1
+Enunciat25 r2	resposta1	resposta2	resposta3	2
+Enunciat26 r1	resposta1	resposta2	resposta3	1
+Enunciat27 r3	resposta1	resposta2	resposta3	3
+Enunciat28 r2	resposta1	resposta2	resposta3	2	Imatge4
+Enunciat29 r3	resposta1	resposta2	resposta3	3
+Enunciat30 r1	resposta1	resposta2	resposta3	1
+Enunciat31 r2	resposta1	resposta2	resposta3	2
+Enunciat32 r2	resposta1	resposta2	resposta3	2
+Enunciat33 r3	resposta1	resposta2	resposta3	3
+Enunciat34 r1	resposta1	resposta2	resposta3	1	Imatge3
+Enunciat35 r1	resposta1	resposta2	resposta3	1
+Enunciat36 r2	resposta1	resposta2	resposta3	2
+Enunciat37 r1	resposta1	resposta2	resposta3	1
+Enunciat38 r3	resposta1	resposta2	resposta3	3
+Enunciat39 r2	resposta1	resposta2	resposta3	2	Imatge4
+Enunciat40 r3	resposta1	resposta2	resposta3	3
+Enunciat41 r1	resposta1	resposta2	resposta3	1
+Enunciat42 r2	resposta1	resposta2	resposta3	2
