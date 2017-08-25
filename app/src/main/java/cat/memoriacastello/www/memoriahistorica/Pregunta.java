@@ -59,6 +59,7 @@ public class Pregunta extends AppCompatActivity {
             MainActivity.contestades += 1;
         }
         MainActivity.test[index].setEstat(estat);
+
         finish();
     }
 }
