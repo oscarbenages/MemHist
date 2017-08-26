@@ -32,11 +32,9 @@ public class Pregunta extends AppCompatActivity {
         p3rb2 = (RadioButton) findViewById(R.id.p3rb2);
         p3rb3 = (RadioButton) findViewById(R.id.p3rb3);
 
-        //Toast.makeText(this, String.format("Llegiré la pregunta: %d", index), Toast.LENGTH_LONG).show();
-
         DadesPregunta pregunta = MainActivity.test[index];
 
-        p3tv1.setText(String.format("[%d] %s", pregunta.getId(), pregunta.getEnunciat()));
+        p3tv1.setText(String.format("[%02d] %s", pregunta.getId(), pregunta.getEnunciat()));
         p3rb1.setText(pregunta.getResposta1());
         p3rb2.setText(pregunta.getResposta2());
         p3rb3.setText(pregunta.getResposta3());
@@ -45,7 +43,6 @@ public class Pregunta extends AppCompatActivity {
 
     public void comprova(View v){
         int estat;
-        String msg;
         if (!p3rb1.isChecked() && !p3rb2.isChecked() && !p3rb3.isChecked()) {
             estat = 0;
             Frases.espenta(this);

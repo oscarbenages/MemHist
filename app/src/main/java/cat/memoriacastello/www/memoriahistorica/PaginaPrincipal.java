@@ -101,28 +101,6 @@ public class PaginaPrincipal extends AppCompatActivity {
         return false;
     }
 
-    public String[] lligFitxer(String f){
-        String nomFitxer = String.format("%s.txt", f);
-        String tot = "";
-        if (existix(nomFitxer))
-            try {
-                InputStreamReader fitxer = new InputStreamReader(
-                        openFileInput(nomFitxer)
-                );
-                BufferedReader br = new BufferedReader(fitxer);
-                String línia;
-                do {
-                    línia = br.readLine();
-                    tot += línia + "\n";
-                } while (línia != null);
-                br.close();
-                fitxer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        return tot.split("\n");
-    }
-
     protected void desaFitxer(String f, String s) {
         String nomFitxer = String.format("%s.txt", f);
         try {
@@ -153,7 +131,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         int vector[]= new int[20];
         for (int j = 0; j < vector.length; j++){vector[j]=-1;}
         while (tots < 20) {
-            alea = random.nextInt(MainActivity.preguntes.length);
+            alea = random.nextInt(MainActivity.maxPreguntes);
             boolean existeix = false;
             for (int j = 0; j < vector.length; j++) {
                 if (alea == vector[j]) {
@@ -177,7 +155,6 @@ public class PaginaPrincipal extends AppCompatActivity {
             i.putExtra("index", String.valueOf(idx));
             startActivity(i);
         } else {
-            //Toast.makeText(this, "ja heu contestat a esta pregunta.", Toast.LENGTH_LONG).show();
             Frases.prohibeix(this);
         }
     }

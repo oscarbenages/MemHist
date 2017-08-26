@@ -12,24 +12,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     //Atributs
     protected static String nomUsuari;
     protected static int edatUsuari;
       //Vector amb totes les preguntes.
-    protected static DadesPregunta preguntes[] = new DadesPregunta[42];
+    protected static final int maxPreguntes = 42;
+    protected static DadesPregunta preguntes[] = new DadesPregunta[maxPreguntes];
       //Vector amb només 20 preg. del joc en curs.
-    protected static DadesPregunta test[] = new DadesPregunta[20];
+    protected static final int maxPregPerPartida = 20;
+    protected static DadesPregunta test[] = new DadesPregunta[maxPregPerPartida];
     protected static long horaInici;
     protected static long horaFi;
     protected static int contestades;
+    protected static int benContestades[] = new int[maxPreguntes];
     protected static boolean reset = true;
 
     private EditText p1et1, p1et2;
@@ -111,17 +111,20 @@ public class MainActivity extends AppCompatActivity {
                         openFileInput(nomFitxer)
                 );
                 BufferedReader br = new BufferedReader(fitxer);
-                String línia;
-                do {
-                    línia = br.readLine();
+                String línia = br.readLine();
+                while (línia != null) {
                     text += línia + "\n";
-                } while (línia != null);
+                    línia = br.readLine();
+                }
                 br.close();
                 fitxer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        Intent i = new Intent(this, Notificacio.class);
+        i.putExtra("text", text);
+        startActivity(i);
+        //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     protected void desaFitxer(String f, String s) {
@@ -238,6 +241,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, ApropDe.class));
     }
 }
-
-//TODO: canviar de color i de nom el títol
-//TODO: IMPORTANT! no poder canviar la vista a horizontal.
