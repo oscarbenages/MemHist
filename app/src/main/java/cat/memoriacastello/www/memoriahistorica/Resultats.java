@@ -1,10 +1,16 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Resultats extends AppCompatActivity {
     private TextView p4tv1;
@@ -32,7 +38,7 @@ public class Resultats extends AppCompatActivity {
                 MainActivity.horaFi;
         String temps = obtéDifTemps(tempsFinal, MainActivity.horaInici);
         p4tv1.setText(
-                String.format("Heu obntingut una puntuació de %d punts\nen %s", suma, temps)
+                String.format("Heu obtingut una puntuació de %d punts\nen %s", suma, temps)
         );
     }
 
@@ -52,6 +58,8 @@ public class Resultats extends AppCompatActivity {
         MainActivity.horaInici = java.util.Calendar.getInstance().getTimeInMillis();
         MainActivity.contestades = 0;
         MainActivity.reset = true;
+        String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
+        desaFitxer("historial", String.format("[end:%s]\n[begin:%s]", ara, ara));
         finish();
     }
 
@@ -59,8 +67,37 @@ public class Resultats extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("LOGOUT", true);
+
+        desaFitxer(
+                "historial",
+                String.format(
+                        "[end:%s]",
+                        new SimpleDateFormat(
+                                "yyy/MM/dd HH:mm:ss"
+                        ).format(
+                                new Date()
+                        )
+                )
+        );
+
         startActivity(intent);
         Frases.acomiada(this);
+    }
+
+    protected void desaFitxer(String f, String s) {
+        String nomFitxer = String.format("%s.txt", f);
+        try {
+            OutputStreamWriter fitxer = new OutputStreamWriter(
+                    openFileOutput(
+                            nomFitxer, Activity.MODE_APPEND
+                    )
+            );
+            fitxer.write(s+"\n");
+            fitxer.flush();
+            fitxer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static String concatena(String vector[]) {

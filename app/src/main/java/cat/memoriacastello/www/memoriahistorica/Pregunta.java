@@ -1,10 +1,14 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class Pregunta extends AppCompatActivity {
     private int index;
@@ -59,7 +63,23 @@ public class Pregunta extends AppCompatActivity {
             MainActivity.contestades += 1;
         }
         MainActivity.test[index].setEstat(estat);
-
+        desaFitxer("historial", String.format("[id:%d\te:%d]", MainActivity.test[index].getId(), estat));
         finish();
+    }
+
+    protected void desaFitxer(String f, String s) {
+        String nomFitxer = String.format("%s.txt", f);
+        try {
+            OutputStreamWriter fitxer = new OutputStreamWriter(
+                    openFileOutput(
+                            nomFitxer, Activity.MODE_APPEND
+                    )
+            );
+            fitxer.write(s+"\n");
+            fitxer.flush();
+            fitxer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

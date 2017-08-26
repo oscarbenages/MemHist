@@ -1,5 +1,6 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -17,7 +22,6 @@ public class PaginaPrincipal extends AppCompatActivity {
     private TextView p2tv2;
     private Button p2b1, p2b2, p2b3, p2b4, p2b5, p2b6, p2b7, p2b8, p2b9, p2b10,
             p2b11, p2b12, p2b13, p2b14, p2b15, p2b16, p2b17, p2b18, p2b19, p2b20;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         if (MainActivity.contestades == 0) Frases.saluda(this);
         else if (MainActivity.contestades != 20) Frases.continua(this);
         else Frases.finalitza(this);
+        desaFitxer("historial", String.format("[u:%s\ta:%d]", MainActivity.nomUsuari, MainActivity.edatUsuari));
     }
 
     @Override
@@ -87,6 +92,51 @@ public class PaginaPrincipal extends AppCompatActivity {
             botons[i++].setBackgroundColor(color);
         }
         p2tv2.setText(String.format("puntuació: %d", suma));
+    }
+
+    private boolean existix(String f) {
+        for (String fitxer : fileList())
+            if (f.equals(fitxer))
+                return true;
+        return false;
+    }
+
+    public String[] lligFitxer(String f){
+        String nomFitxer = String.format("%s.txt", f);
+        String tot = "";
+        if (existix(nomFitxer))
+            try {
+                InputStreamReader fitxer = new InputStreamReader(
+                        openFileInput(nomFitxer)
+                );
+                BufferedReader br = new BufferedReader(fitxer);
+                String línia;
+                do {
+                    línia = br.readLine();
+                    tot += línia + "\n";
+                } while (línia != null);
+                br.close();
+                fitxer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return tot.split("\n");
+    }
+
+    protected void desaFitxer(String f, String s) {
+        String nomFitxer = String.format("%s.txt", f);
+        try {
+            OutputStreamWriter fitxer = new OutputStreamWriter(
+                    openFileOutput(
+                            nomFitxer, Activity.MODE_APPEND
+                    )
+            );
+            fitxer.write(s+"\n");
+            fitxer.flush();
+            fitxer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void ompleTest (){

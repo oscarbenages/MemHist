@@ -16,6 +16,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     //Atributs
@@ -48,10 +50,27 @@ public class MainActivity extends AppCompatActivity {
 
         lligDades();
 
-        lligFitxer("historial");
-        Date data = new Date();
-        DateFormat ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
-        desaFitxer("historial", ara.format(data));
+        mostraContingut("historial");
+
+        String vector[] = lligFitxer("historial");
+        for(String s : vector)
+            if (s.startsWith("[u:")) {
+                String usuari = s.substring(3, s.indexOf("\t"));
+                String edat = s.substring(s.indexOf("\t")+3, s.indexOf("]"));
+                p1et1.setText(usuari);
+                p1et2.setText(edat);
+                break;
+            }
+        if (!vector[0].startsWith("[begin:"))
+            desaFitxer(
+                    "historial",
+                    String.format(
+                            "[begin:%s]",
+                            new SimpleDateFormat(
+                                    "yyy/MM/dd HH:mm:ss"
+                            ).format(new Date())
+                    )
+            );
     }
 
     private boolean existix(String f) {
@@ -70,24 +89,42 @@ public class MainActivity extends AppCompatActivity {
                         openFileInput(nomFitxer)
                 );
                 BufferedReader br = new BufferedReader(fitxer);
-                String línia = null;
-                try {
+                String línia;
+                do {
                     línia = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                while (línia != null) {
                     tot += línia + "\n";
-                    línia = br.readLine();
-                }
+                } while (línia != null);
                 br.close();
                 fitxer.close();
-            } catch (IOException ignored) {
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         return tot.split("\n");
     }
 
-    public void desaFitxer(String f, String s) {
+    public void mostraContingut(String f){
+        String nomFitxer = String.format("%s.txt", f);
+        String text = "";
+        if (existix(nomFitxer))
+            try {
+                InputStreamReader fitxer = new InputStreamReader(
+                        openFileInput(nomFitxer)
+                );
+                BufferedReader br = new BufferedReader(fitxer);
+                String línia;
+                do {
+                    línia = br.readLine();
+                    text += línia + "\n";
+                } while (línia != null);
+                br.close();
+                fitxer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    protected void desaFitxer(String f, String s) {
         String nomFitxer = String.format("%s.txt", f);
         try {
             OutputStreamWriter fitxer = new OutputStreamWriter(
@@ -98,11 +135,11 @@ public class MainActivity extends AppCompatActivity {
             fitxer.write(s+"\n");
             fitxer.flush();
             fitxer.close();
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    @SuppressLint("DefaultLocale")
     private void lligDades() {
         /*
         TODO: fer que després de llegir les dades canvie l'ordre tant de les preguntes com
