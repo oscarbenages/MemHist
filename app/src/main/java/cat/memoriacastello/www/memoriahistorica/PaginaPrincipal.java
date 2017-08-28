@@ -143,7 +143,8 @@ public class PaginaPrincipal extends AppCompatActivity {
                 }
             }
             if (!existeix) {
-                MainActivity.test[tots++] = MainActivity.preguntes[alea];
+                MainActivity.test[tots] = MainActivity.preguntes[alea];
+                MainActivity.test[tots++].setEstat(0);
             }
         }
     }
