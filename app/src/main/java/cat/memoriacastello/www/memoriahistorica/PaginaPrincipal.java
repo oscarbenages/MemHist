@@ -24,7 +24,9 @@ public class PaginaPrincipal extends AppCompatActivity {
     private TextView p2tv2;
     private Button p2b1, p2b2, p2b3, p2b4, p2b5, p2b6, p2b7, p2b8, p2b9, p2b10,
             p2b11, p2b12, p2b13, p2b14, p2b15, p2b16, p2b17, p2b18, p2b19, p2b20;
-    private MainActivity m;
+
+    //Instncies de classe
+    MainActivity m = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         if (MainActivity.contestades == 0) Frases.saluda(this);
         else if (MainActivity.contestades != 20) Frases.continua(this);
         else Frases.finalitza(this);
-        String v[] = lligFitxer("historial");
+        String v[] = m.lligFitxer("historial");
         String s = v[v.length-2];
         if (s.startsWith("[begin:"))
             desaFitxer("historial", String.format("[u:%s\ta:%d]", MainActivity.nomUsuari, MainActivity.edatUsuari));
@@ -99,7 +101,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         }
         p2tv2.setText(String.format("puntuació: %d", suma));
 
-        String v[] = lligFitxer("historial");
+        String v[] = m.lligFitxer("historial");
         String s = v[v.length-2];
         if (s.startsWith("[begin:"))
             desaFitxer("historial", String.format("[u:%s\ta:%d]", MainActivity.nomUsuari, MainActivity.edatUsuari));
@@ -128,28 +130,6 @@ public class PaginaPrincipal extends AppCompatActivity {
         }
     }
 
-    public String[] lligFitxer(String f){
-        String nomFitxer = String.format("%s.txt", f);
-        String tot = "";
-        if (existix(nomFitxer))
-            try {
-                InputStreamReader fitxer = new InputStreamReader(
-                        openFileInput(nomFitxer)
-                );
-                BufferedReader br = new BufferedReader(fitxer);
-                String línia;
-                do {
-                    línia = br.readLine();
-                    tot += línia + "\n";
-                } while (línia != null);
-                br.close();
-                fitxer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        return tot.split("\n");
-    }
-
     private void ompleTest (){
         /*
         Este procediment ens permet omplir el vector de les preguntes que eixen
@@ -158,7 +138,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         preguntes no seran les mateixes i l'ordre en que apareixen serà diferent.
          */
 
-        String v[] = lligFitxer("historial");
+        String v[] = m.lligFitxer("historial");
         for (String linea : v){
             if (linea.startsWith("[id:")){
                 String s = "\\[id:(\\d+)\\te:(-?1)\\]";
@@ -184,7 +164,7 @@ public class PaginaPrincipal extends AppCompatActivity {
                 if (alea == vector[j]) {
                     existix = true;
                     break;
-                } else if (vector[j] == -1 && !existixID(alea, MainActivity.benContestades)) {
+                } else if (vector[j] == -1 /*&& !existixID(alea, MainActivity.benContestades)*/) {
                     vector[j] = alea;
                     break;
                 }

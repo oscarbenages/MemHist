@@ -59,11 +59,6 @@ public class MainActivity extends AppCompatActivity {
         String vector[] = lligFitxer("historial");
         for(String s : vector)
             if (s.startsWith("[u:")) {
-                /*
-                String usuari = s.substring(3, s.indexOf("\t"));
-                String edat = s.substring(s.indexOf("\t")+3, s.indexOf("]"));
-                */
-
                 String s1 = "\\[u:(\\w+)\\ta:(1[4-8])\\]", usuari = "", edat = "";
                 Pattern p  = Pattern.compile(s1);
                 Matcher m = p.matcher(s);
