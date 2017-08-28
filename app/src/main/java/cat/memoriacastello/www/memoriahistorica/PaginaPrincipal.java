@@ -128,8 +128,8 @@ public class PaginaPrincipal extends AppCompatActivity {
         Random random = new Random();
         int alea;
         int tots = 0;
-        int vector[]= new int[20];
-        for (int j = 0; j < vector.length; j++){vector[j]=-1;}
+        int vector[]= new int[MainActivity.maxPregPerPartida];
+        for (int j = 0; j < vector.length; j++, vector[j]=-1);
         while (tots < 20) {
             alea = random.nextInt(MainActivity.maxPreguntes);
             boolean existeix = false;

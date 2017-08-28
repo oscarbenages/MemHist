@@ -15,6 +15,8 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     //Atributs
@@ -55,8 +57,21 @@ public class MainActivity extends AppCompatActivity {
         String vector[] = lligFitxer("historial");
         for(String s : vector)
             if (s.startsWith("[u:")) {
+                /*
                 String usuari = s.substring(3, s.indexOf("\t"));
                 String edat = s.substring(s.indexOf("\t")+3, s.indexOf("]"));
+                */
+
+                String s1 = "\\[u:(\\w+)\\ta:(1[4-8])\\]", usuari = "", edat = "";
+                Pattern p  = Pattern.compile(s1);
+                Matcher m = p.matcher(s);
+
+                while (m.find()) {
+                    usuari = m.group(1);
+                    edat = m.group(2);
+                    break;
+                }
+
                 p1et1.setText(usuari);
                 p1et2.setText(edat);
                 break;
@@ -89,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
                         openFileInput(nomFitxer)
                 );
                 BufferedReader br = new BufferedReader(fitxer);
-                String línia;
-                do {
-                    línia = br.readLine();
+                String línia = br.readLine();
+                while (línia != null) {
                     tot += línia + "\n";
-                } while (línia != null);
+                    línia = br.readLine();
+                };
                 br.close();
                 fitxer.close();
             } catch (IOException e) {
