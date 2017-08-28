@@ -36,7 +36,8 @@
         <activity
             android:name=".Historial"
             android:screenOrientation="portrait" />
-        <activity android:name=".Notificacio"></activity>
+        <activity android:name=".Notificacio"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

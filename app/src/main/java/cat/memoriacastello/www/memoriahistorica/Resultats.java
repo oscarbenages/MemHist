@@ -46,7 +46,7 @@ public class Resultats extends AppCompatActivity {
         finish();
     }
 
-    public void reinicia(View v){
+    public void nova(View v){
         /*
         S'ha de reiniciar:
         - l'hora d'inici (camp horaInici del MainActivity).
@@ -59,7 +59,13 @@ public class Resultats extends AppCompatActivity {
         MainActivity.contestades = 0;
         MainActivity.reset = true;
         String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
-        desaFitxer("historial", String.format("[end:%s]\n[begin:%s]", ara, ara));
+        desaFitxer(
+                "historial",
+                String.format(
+                        "[end:%1$s]\n[begin:%1$s]",
+                        ara
+                )
+        );
         finish();
     }
 
