@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected static long horaInici;
     protected static long horaFi;
     protected static int contestades;
-    protected static int benContestades[] = new int[maxPreguntes];
+    protected static int benContestades[];
     protected static boolean reset = true;
 
     private EditText p1et1, p1et2;
@@ -42,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Codi per a tancar l'aplicació (relacionada amb el botó 'IX DEL JOC'
         //de la funció surt() al fitxer Resultats.java).
-        if (getIntent().getBooleanExtra("LOGOUT", false))
+        if (getIntent().getBooleanExtra("LOGOUT", false)){
             finish();
+            return;
+        }
 
         p1et1 = (EditText) findViewById(R.id.p1et1);
         p1et2 = (EditText) findViewById(R.id.p1et2);
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 p1et2.setText(edat);
                 break;
             }
-        if (!vector[0].startsWith("[begin:"))
+        if (!vector[vector.length-1].startsWith("[begin:"))
             desaFitxer(
                     "historial",
                     String.format(
