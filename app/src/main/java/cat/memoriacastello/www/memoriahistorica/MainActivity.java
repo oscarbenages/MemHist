@@ -13,8 +13,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     //Atributs
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected static long horaInici;
     protected static long horaFi;
     protected static int contestades;
-    protected static int benContestades[];
+    protected static ArrayList<Integer> benContestades = new ArrayList<Integer>();
     protected static boolean reset = true;
 
     private EditText p1et1, p1et2;
@@ -55,10 +58,17 @@ public class MainActivity extends AppCompatActivity {
         mostraContingut("historial");
 
         String vector[] = lligFitxer("historial");
-        for(String s : vector)
-            if (s.startsWith("[u:")) {
-                String usuari = s.substring(3, s.indexOf("\t"));
-                String edat = s.substring(s.indexOf("\t")+3, s.indexOf("]"));
+        for(String línia : vector)
+            if (línia.startsWith("[u:")) {
+                String s = "\\[u:(\\w+)\\ta:(\\d+)\\]";
+                Pattern p = Pattern.compile(s);
+                Matcher m = p.matcher(línia);
+                String usuari = "", edat = "";
+                while(m.find()){
+                    usuari = m.group(1);
+                    edat = m.group(2);
+                    break;
+                }
                 p1et1.setText(usuari);
                 p1et2.setText(edat);
                 break;

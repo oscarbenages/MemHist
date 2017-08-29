@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -169,49 +170,25 @@ public class PaginaPrincipal extends AppCompatActivity {
                     estat = Integer.parseInt(m.group(1));
                     id = Integer.parseInt(m.group(2));
                 }
-                    if (estat==1) afegixBenContestada(id);
+                if (estat==1 && !MainActivity.benContestades.contains(id))
+                    MainActivity.benContestades.add(id);
             }
         }
+
         Random random = new Random();
         int alea;
         int tots = 0;
-        int vector[]= new int[20];
-        for (int j = 0; j < vector.length; j++){vector[j]=-1;}
+        ArrayList<Integer> llista = new ArrayList<Integer>();
         while (tots < 20) {
             alea = random.nextInt(MainActivity.maxPreguntes);
-            boolean existix = false;
-            for (int j = 0; j < vector.length; j++) {
-                if (alea == vector[j]) {
-                    existix = true;
-                    break;
-                } else if (vector[j] == -1 && !existixID(alea, MainActivity.benContestades)) {
-                    vector[j] = alea;
-                    break;
-                }
-            }
-            if (!existix) {
+            if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
+                llista.add(alea);
                 MainActivity.test[tots] = MainActivity.preguntes[alea];
                 MainActivity.test[tots++].setEstat(0);
             }
         }
     }
 
-    private boolean existixID(int id, int vector[]){
-        boolean existix = false;
-        for (int j = 0; j < vector.length; j++) {
-            if (id == vector[j]) {
-                existix = true;
-                break;
-            }
-        }
-        return existix;
-    }
-
-    private void afegixBenContestada(int id){
-        int v[] = new int[MainActivity.benContestades.length+1];
-        v[v.length-1] = id;
-        MainActivity.benContestades = v;
-    }
     public void obre_pregunta(View v, int idx){
         DadesPregunta pregunta = MainActivity.test[idx];
         if (pregunta.getEstat()==0) {
