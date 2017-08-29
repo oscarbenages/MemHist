@@ -2,7 +2,9 @@
     <string name="app_name">Memoria històrica Castelló</string>
     <string name="title_activity_notificacio">Notificacio</string>
     <string name="large_text">
-        "Eliminat tot el contingut que no sabem a què venia...\n\n"
+        "Regles a tenir en compte\n\n"
+
+        "L'usuari pot repetir les voltes que li convinga.\n"
     </string>
     <string name="action_settings">Settings</string>
 </resources>

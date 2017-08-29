@@ -15,6 +15,9 @@ import java.util.Date;
 public class Resultats extends AppCompatActivity {
     private TextView p4tv1;
 
+    //Instàncies de classe
+    MainActivity m = new MainActivity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class Resultats extends AppCompatActivity {
         MainActivity.contestades = 0;
         MainActivity.reset = true;
         String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
-        desaFitxer(
+        m.desaFitxer(
                 "historial",
                 String.format(
                         "[end:%1$s]\n[begin:%1$s]",
@@ -74,7 +77,7 @@ public class Resultats extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("LOGOUT", true);
 
-        desaFitxer(
+        m.desaFitxer(
                 "historial",
                 String.format(
                         "[end:%s]",
@@ -88,22 +91,6 @@ public class Resultats extends AppCompatActivity {
 
         startActivity(intent);
         Frases.acomiada(this);
-    }
-
-    protected void desaFitxer(String f, String s) {
-        String nomFitxer = String.format("%s.txt", f);
-        try {
-            OutputStreamWriter fitxer = new OutputStreamWriter(
-                    openFileOutput(
-                            nomFitxer, Activity.MODE_APPEND
-                    )
-            );
-            fitxer.write(s+"\n");
-            fitxer.flush();
-            fitxer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private static String concatena(String vector[]) {
