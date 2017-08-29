@@ -3,6 +3,7 @@ package cat.memoriacastello.www.memoriahistorica;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -60,7 +61,7 @@ public class PaginaPrincipal extends AppCompatActivity {
 
         MainActivity.horaInici = Calendar.getInstance().getTimeInMillis();
         if (MainActivity.contestades == 0) Frases.saluda(this);
-        else if (MainActivity.contestades != 20) Frases.continua(this);
+        else if (MainActivity.contestades != MainActivity.maxPregPerPartida) Frases.continua(this);
         else Frases.finalitza(this);
         String v[] = lligFitxer("historial");
         String s = v[v.length-1];
@@ -166,6 +167,8 @@ public class PaginaPrincipal extends AppCompatActivity {
         preguntes no seran les mateixes i l'ordre en que apareixen serà diferent.
          */
 
+
+
         String v[] = lligFitxer("historial");
         for (String linea : v){
             if (linea.startsWith("[id:")){
@@ -174,28 +177,31 @@ public class PaginaPrincipal extends AppCompatActivity {
                 Matcher m = p.matcher(linea);
                 int estat=0,id=0;
                 while (m.find()){
-                    estat = Integer.parseInt(m.group(1));
-                    id = Integer.parseInt(m.group(2));
+                    estat = Integer.parseInt(m.group(2));
+                    id = Integer.parseInt(m.group(1));
                 }
                 if (estat==1 && !MainActivity.benContestades.contains(id))
                     MainActivity.benContestades.add(id);
             }
         }
 
-        Toast.makeText(this, "bC: "+MainActivity.benContestades.toString(), Toast.LENGTH_LONG).show();
 
         Random random = new Random();
-        int alea;
+        Integer alea;
         int tots = 0;
         ArrayList<Integer> llista = new ArrayList<>();
-        while (tots < MainActivity.maxPregPerPartida && MainActivity.maxPreguntes != MainActivity.benContestades.size() ) {
+        int mida = MainActivity.benContestades == null ? 0 : MainActivity.benContestades.size();
+        int forat = MainActivity.maxPreguntes - mida;
+        while (tots <= MainActivity.maxPregPerPartida /*&& tots < forat*/) {
             alea = random.nextInt(MainActivity.maxPreguntes);
             if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
                 llista.add(alea);
                 MainActivity.test[tots++] = MainActivity.preguntes[alea];
                 //MainActivity.test[tots++].setEstat(0);
+
             }
         }
+
     }
 
     public void obre_pregunta(View v, int idx){

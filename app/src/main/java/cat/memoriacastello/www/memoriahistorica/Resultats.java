@@ -32,9 +32,9 @@ public class Resultats extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        int suma=0;
+        int suma = MainActivity.benContestades.size();
         for (DadesPregunta pregunta: MainActivity.test)
-            if ( pregunta.getEstat()>0) suma += 1;
+            if (pregunta != null && pregunta.getEstat()>0) suma += 1;
 
         if (MainActivity.contestades == 20 && MainActivity.horaFi == 0)
             MainActivity.horaFi = java.util.Calendar.getInstance().getTimeInMillis();
@@ -136,9 +136,8 @@ public class Resultats extends AppCompatActivity {
         String unitats_sg[] = {"hora", "minut", "segon"};
         String unitats_pl[] = {"hores", "minuts", "segons"};
         String resultat[] = {null, null, null};
-        for (int i = 0; i < vector.length; i++){
+        for (int i = 0; i < vector.length; i++)
             if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], vector[i] != 1 ? unitats_pl[i] : unitats_sg[i]);
-        }
         return concatena(resultat);
     }
 
