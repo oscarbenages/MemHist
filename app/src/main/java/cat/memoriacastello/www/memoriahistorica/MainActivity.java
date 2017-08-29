@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected static long horaInici;
     protected static long horaFi;
     protected static int contestades;
-    protected static ArrayList<Integer> benContestades = new ArrayList<Integer>();
+    protected static ArrayList<Integer> benContestades = new ArrayList<>();
     protected static boolean reset = true;
 
     private EditText p1et1, p1et2;
@@ -101,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
                         openFileInput(nomFitxer)
                 );
                 BufferedReader br = new BufferedReader(fitxer);
-                String línia;
-                do {
-                    línia = br.readLine();
+                String línia = br.readLine();
+                while (línia != null) {
                     tot += línia + "\n";
-                } while (línia != null);
+                    línia = br.readLine();
+                }
                 br.close();
                 fitxer.close();
             } catch (IOException e) {
@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, Notificacio.class);
         i.putExtra("text", text);
         startActivity(i);
-        //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     protected void desaFitxer(String f, String s) {
@@ -207,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 preguntes[i++] = dp;
             }
-            //msg = "S'ha llegit el fitxer amb èxit.";
         } catch (Exception e) {
             msg = "No s'ha pogut accedir al fitxer.";
         }

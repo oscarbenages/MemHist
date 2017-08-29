@@ -13,11 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Resultats extends AppCompatActivity {
+    //Atributs
     private TextView p4tv1;
 
-    //Instàncies de classe
+    //Instància
     MainActivity m = new MainActivity();
 
+    //Mètodes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,8 @@ public class Resultats extends AppCompatActivity {
         MainActivity.contestades = 0;
         MainActivity.reset = true;
         String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
-        m.desaFitxer(
+
+        desaFitxer(
                 "historial",
                 String.format(
                         "[end:%1$s]\n[begin:%1$s]",
@@ -73,11 +76,12 @@ public class Resultats extends AppCompatActivity {
     }
 
     public void surt(View v){
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("LOGOUT", true);
 
-        m.desaFitxer(
+        desaFitxer(
                 "historial",
                 String.format(
                         "[end:%s]",
@@ -94,7 +98,7 @@ public class Resultats extends AppCompatActivity {
     }
 
     private static String concatena(String vector[]) {
-        /*****
+        /*
          *  Este mètode permet concatenar els elements d'una llista amb la coma
          *  de separador i la conjunció entre el darrer i el penúltim element.
          */
@@ -135,7 +139,23 @@ public class Resultats extends AppCompatActivity {
         for (int i = 0; i < vector.length; i++){
             if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], vector[i] != 1 ? unitats_pl[i] : unitats_sg[i]);
         }
-        //Toast.makeText(this, String.format("envie : %s\n%s", Arrays.toString(resultat), Arrays.toString(vector)), Toast.LENGTH_LONG).show();
         return concatena(resultat);
     }
+
+    protected void desaFitxer(String f, String s) {
+        String nomFitxer = String.format("%s.txt", f);
+        try {
+            OutputStreamWriter fitxer = new OutputStreamWriter(
+                    openFileOutput(
+                            nomFitxer, Activity.MODE_APPEND
+                    )
+            );
+            fitxer.write(s+"\n");
+            fitxer.flush();
+            fitxer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

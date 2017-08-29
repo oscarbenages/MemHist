@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class Pregunta extends AppCompatActivity {
+    //Atributs
     private int index;
     private int respCorr;
     private TextView p3tv1;
@@ -18,9 +19,10 @@ public class Pregunta extends AppCompatActivity {
     private RadioButton p3rb2;
     private RadioButton p3rb3;
 
-    //Instàncies de classe
+    //Instància
     MainActivity m = new MainActivity();
 
+    //Mètodes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,23 @@ public class Pregunta extends AppCompatActivity {
             MainActivity.contestades += 1;
         }
         MainActivity.test[index].setEstat(estat);
-        m.desaFitxer("historial", String.format("[id:%d\te:%d]", MainActivity.test[index].getId(), estat));
+        desaFitxer("historial", String.format("[id:%d\te:%d]", MainActivity.test[index].getId(), estat));
         finish();
+    }
+
+    protected void desaFitxer(String f, String s) {
+        String nomFitxer = String.format("%s.txt", f);
+        try {
+            OutputStreamWriter fitxer = new OutputStreamWriter(
+                    openFileOutput(
+                            nomFitxer, Activity.MODE_APPEND
+                    )
+            );
+            fitxer.write(s+"\n");
+            fitxer.flush();
+            fitxer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
