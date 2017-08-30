@@ -2,6 +2,7 @@ package cat.memoriacastello.www.memoriahistorica;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -79,7 +80,7 @@ public class Resultats extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("LOGOUT", true);
+        intent.putExtra("surt", true);
 
         desaFitxer(
                 "historial",
@@ -97,10 +98,10 @@ public class Resultats extends AppCompatActivity {
         Frases.acomiada(this);
     }
 
-    private static String concatena(String vector[]) {
+    private String concatena(String vector[]) {
         /*
          *  Este mètode permet concatenar els elements d'una llista amb la coma
-         *  de separador i la conjunció entre el darrer i el penúltim element.
+         *  de separador i la conjunció entre el darrer i el penúltim element si s'escau.
          */
         StringBuilder sb = new StringBuilder();
         int i = 0, e = 0; //'i' es l'index dels vectors i 'e' és el nombre d'elements no nuls.

@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected static long horaFi;
     protected static int contestades;
     protected static ArrayList<Integer> benContestades = new ArrayList<>();
+    protected static int puntuació;
     protected static boolean reset = true;
 
     private EditText p1et1;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Codi per a tancar l'aplicació (relacionada amb el botó 'IX DEL JOC'
         //de la funció surt() al fitxer Resultats.java).
-        if (getIntent().getBooleanExtra("LOGOUT", false)){
+        if (getIntent().getBooleanExtra("surt", false)){
             finish();
             return;
         }

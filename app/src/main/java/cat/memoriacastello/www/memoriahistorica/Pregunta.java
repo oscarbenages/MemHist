@@ -1,6 +1,7 @@
 package cat.memoriacastello.www.memoriahistorica;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,9 +29,7 @@ public class Pregunta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pregunta);
 
-        Bundle bundle = getIntent().getExtras();
-        String s = bundle.getString("index");
-        index = Integer.parseInt(s);
+        index = Integer.parseInt(getIntent().getExtras().getString("index"));
 
         p3tv1 = (TextView) findViewById(R.id.p3tv1);
         p3rb1 = (RadioButton) findViewById(R.id.p3rb1);
