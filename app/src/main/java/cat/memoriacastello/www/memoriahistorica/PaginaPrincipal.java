@@ -201,8 +201,11 @@ public class PaginaPrincipal extends AppCompatActivity {
                 }
             }
         } catch (Exception e){
-            e.printStackTrace();
-            finish();
+            StackTraceElement[] stack = e.getStackTrace();
+            String exception = "Current stack trace is:\n";
+            for (StackTraceElement s : stack)
+                exception += String.format("%s\n\t\t", s.toString());
+            Toast.makeText(this, exception, Toast.LENGTH_LONG).show();
         }
     }
 
