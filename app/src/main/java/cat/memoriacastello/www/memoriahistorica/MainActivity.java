@@ -24,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
     protected static String nomUsuari;
     protected static int edatUsuari;
       //Vector amb totes les preguntes.
-    protected static final int maxPreguntes = 42;
-    protected static DadesPregunta preguntes[] = new DadesPregunta[maxPreguntes];
+    protected static final int MAX_PREGUNTES = 42;
+    protected static DadesPregunta preguntes[] = new DadesPregunta[MAX_PREGUNTES];
       //Vector amb només 20 preg. del joc en curs.
-    protected static final int maxPregPerPartida = 20;
-    protected static DadesPregunta test[] = new DadesPregunta[maxPregPerPartida];
+    protected static final int MAX_PREG_PER_PARTIDA = 20;
+    protected static DadesPregunta test[] = new DadesPregunta[MAX_PREG_PER_PARTIDA];
     protected static long horaInici;
     protected static long horaFi;
     protected static int contestades;

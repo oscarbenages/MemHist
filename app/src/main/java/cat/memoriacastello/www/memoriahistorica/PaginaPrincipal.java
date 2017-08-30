@@ -61,7 +61,7 @@ public class PaginaPrincipal extends AppCompatActivity {
 
         MainActivity.horaInici = Calendar.getInstance().getTimeInMillis();
         if (MainActivity.contestades == 0) Frases.saluda(this);
-        else if (MainActivity.contestades != MainActivity.maxPregPerPartida) Frases.continua(this);
+        else if (MainActivity.contestades != MainActivity.MAX_PREG_PER_PARTIDA) Frases.continua(this);
         else Frases.finalitza(this);
         String v[] = lligFitxer("historial");
         String s = v[v.length-1];
@@ -185,23 +185,19 @@ public class PaginaPrincipal extends AppCompatActivity {
             }
         }
 
-
         Random random = new Random();
         Integer alea;
         int tots = 0;
         ArrayList<Integer> llista = new ArrayList<>();
-        int mida = MainActivity.benContestades == null ? 0 : MainActivity.benContestades.size();
-        int forat = MainActivity.maxPreguntes - mida;
-        while (tots <= MainActivity.maxPregPerPartida /*&& tots < forat*/) {
-            alea = random.nextInt(MainActivity.maxPreguntes);
+        int forat = MainActivity.MAX_PREGUNTES - MainActivity.benContestades.size();
+        while (tots <= MainActivity.MAX_PREG_PER_PARTIDA && tots < forat) {
+            alea = random.nextInt(MainActivity.MAX_PREGUNTES);
             if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
                 llista.add(alea);
                 MainActivity.test[tots++] = MainActivity.preguntes[alea];
                 //MainActivity.test[tots++].setEstat(0);
-
             }
         }
-
     }
 
     public void obre_pregunta(View v, int idx){

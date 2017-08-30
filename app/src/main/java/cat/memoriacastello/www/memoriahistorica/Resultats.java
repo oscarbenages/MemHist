@@ -36,7 +36,7 @@ public class Resultats extends AppCompatActivity {
         for (DadesPregunta pregunta: MainActivity.test)
             if (pregunta != null && pregunta.getEstat()>0) suma += 1;
 
-        if (MainActivity.contestades == 20 && MainActivity.horaFi == 0)
+        if (MainActivity.contestades == MainActivity.MAX_PREG_PER_PARTIDA && MainActivity.horaFi == 0)
             MainActivity.horaFi = java.util.Calendar.getInstance().getTimeInMillis();
         long tempsFinal = MainActivity.horaFi == 0 ?
                 java.util.Calendar.getInstance().getTimeInMillis() :
