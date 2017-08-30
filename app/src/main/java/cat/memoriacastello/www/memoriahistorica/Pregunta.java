@@ -21,7 +21,7 @@ public class Pregunta extends AppCompatActivity {
     private RadioButton p3rb3;
 
     //Instància
-    MainActivity m = new MainActivity();
+    Fitxer f = new Fitxer(this);
 
     //Mètodes
     @Override
@@ -64,23 +64,7 @@ public class Pregunta extends AppCompatActivity {
             MainActivity.contestades += 1;
         }
         MainActivity.test[index].setEstat(estat);
-        desaFitxer("historial", String.format("[id:%d\te:%d]", MainActivity.test[index].getId(), estat));
+        f.desaFitxer("historial", String.format("[id:%d\te:%d]", MainActivity.test[index].getId(), estat));
         finish();
-    }
-
-    protected void desaFitxer(String f, String s) {
-        String nomFitxer = String.format("%s.txt", f);
-        try {
-            OutputStreamWriter fitxer = new OutputStreamWriter(
-                    openFileOutput(
-                            nomFitxer, Activity.MODE_APPEND
-                    )
-            );
-            fitxer.write(s+"\n");
-            fitxer.flush();
-            fitxer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

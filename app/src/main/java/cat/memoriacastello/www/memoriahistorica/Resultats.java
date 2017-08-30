@@ -18,7 +18,7 @@ public class Resultats extends AppCompatActivity {
     private TextView p4tv1;
 
     //Instància
-    MainActivity m = new MainActivity();
+    Fitxer f = new Fitxer(this);
 
     //Mètodes
     @Override
@@ -66,7 +66,7 @@ public class Resultats extends AppCompatActivity {
         MainActivity.reset = true;
         String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
 
-        desaFitxer(
+        f.desaFitxer(
                 "historial",
                 String.format(
                         "[end:%1$s]\n[begin:%1$s]",
@@ -82,7 +82,7 @@ public class Resultats extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("surt", true);
 
-        desaFitxer(
+        f.desaFitxer(
                 "historial",
                 String.format(
                         "[end:%s]",
@@ -141,21 +141,4 @@ public class Resultats extends AppCompatActivity {
             if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], vector[i] != 1 ? unitats_pl[i] : unitats_sg[i]);
         return concatena(resultat);
     }
-
-    protected void desaFitxer(String f, String s) {
-        String nomFitxer = String.format("%s.txt", f);
-        try {
-            OutputStreamWriter fitxer = new OutputStreamWriter(
-                    openFileOutput(
-                            nomFitxer, Activity.MODE_APPEND
-                    )
-            );
-            fitxer.write(s+"\n");
-            fitxer.flush();
-            fitxer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

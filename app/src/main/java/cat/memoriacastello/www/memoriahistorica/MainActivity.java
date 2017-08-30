@@ -1,6 +1,5 @@
 package cat.memoriacastello.www.memoriahistorica;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,10 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText p1et1;
 
+    Fitxer f = new Fitxer(this);
+
     //Metodes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         lligDades();
 
-        mostraContingut("historial");
+        f.mostraContingut("historial");
 
-        String vector[] = lligFitxer("historial");
+        String vector[] = f.lligFitxer("historial");
         for(String línia : vector)
             if (línia.startsWith("[u:")) {
                 String s = "\\[u:(\\w+)\\]";
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         if (!vector[vector.length-1].startsWith("[begin:"))
-            desaFitxer(
+            f.desaFitxer(
                     "historial",
                     String.format(
                             "[begin:%s]",
@@ -80,75 +77,6 @@ public class MainActivity extends AppCompatActivity {
                             ).format(new Date())
                     )
             );
-    }
-
-    private boolean existix(String f) {
-        for (String fitxer : fileList())
-            if (f.equals(fitxer))
-                return true;
-        return false;
-    }
-
-    public String[] lligFitxer(String f){
-        String nomFitxer = String.format("%s.txt", f);
-        String tot = "";
-        if (existix(nomFitxer))
-            try {
-                InputStreamReader fitxer = new InputStreamReader(
-                        openFileInput(nomFitxer)
-                );
-                BufferedReader br = new BufferedReader(fitxer);
-                String línia = br.readLine();
-                while (línia != null) {
-                    tot += línia + "\n";
-                    línia = br.readLine();
-                }
-                br.close();
-                fitxer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        return tot.split("\n");
-    }
-
-    public void mostraContingut(String f){
-        String nomFitxer = String.format("%s.txt", f);
-        String text = "";
-        if (existix(nomFitxer))
-            try {
-                InputStreamReader fitxer = new InputStreamReader(
-                        openFileInput(nomFitxer)
-                );
-                BufferedReader br = new BufferedReader(fitxer);
-                String línia = br.readLine();
-                while (línia != null) {
-                    text += línia + "\n";
-                    línia = br.readLine();
-                }
-                br.close();
-                fitxer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        Intent i = new Intent(this, Notificacio.class);
-        i.putExtra("text", text);
-        startActivity(i);
-    }
-
-    protected void desaFitxer(String f, String s) {
-        String nomFitxer = String.format("%s.txt", f);
-        try {
-            OutputStreamWriter fitxer = new OutputStreamWriter(
-                    openFileOutput(
-                            nomFitxer, Activity.MODE_APPEND
-                    )
-            );
-            fitxer.write(s+"\n");
-            fitxer.flush();
-            fitxer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void lligDades() {
@@ -207,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
             msg = "No s'ha pogut accedir al fitxer.";
         }
         if (msg.length()>0) Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-
     }
 
     public void inicia(View v){

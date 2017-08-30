@@ -28,7 +28,7 @@ public class PaginaPrincipal extends AppCompatActivity {
             p2b11, p2b12, p2b13, p2b14, p2b15, p2b16, p2b17, p2b18, p2b19, p2b20;
 
     //Instància
-    MainActivity m = new MainActivity();
+    Fitxer f = new Fitxer(this);
 
     //Mètodes
     @Override
@@ -63,10 +63,10 @@ public class PaginaPrincipal extends AppCompatActivity {
         if (MainActivity.contestades == 0) Frases.saluda(this);
         else if (MainActivity.contestades != MainActivity.MAX_PREG_PER_PARTIDA) Frases.continua(this);
         else Frases.finalitza(this);
-        String v[] = lligFitxer("historial");
+        String v[] = f.lligFitxer("historial");
         String s = v[v.length-1];
         if (s.startsWith("[begin:"))
-            desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
+            f.desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
     }
 
     @Override
@@ -108,55 +108,10 @@ public class PaginaPrincipal extends AppCompatActivity {
         }
         p2tv2.setText(String.format("puntuació: %d", suma));
 
-        String v[] = lligFitxer("historial");
+        String v[] = f.lligFitxer("historial");
         String s = v[v.length-1];
         if (s.startsWith("[begin:"))
-            desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
-    }
-
-    private boolean existix(String f) {
-        for (String fitxer : fileList())
-            if (f.equals(fitxer))
-                return true;
-        return false;
-    }
-
-    public String[] lligFitxer(String f){
-        String nomFitxer = String.format("%s.txt", f);
-        String tot = "";
-        if (existix(nomFitxer))
-            try {
-                InputStreamReader fitxer = new InputStreamReader(
-                        openFileInput(nomFitxer)
-                );
-                BufferedReader br = new BufferedReader(fitxer);
-                String línia = br.readLine();
-                while (línia != null) {
-                    tot += línia + "\n";
-                    línia = br.readLine();
-                }
-                br.close();
-                fitxer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        return tot.split("\n");
-    }
-
-    public void desaFitxer(String f, String s) {
-        String nomFitxer = String.format("%s.txt", f);
-        try {
-            OutputStreamWriter fitxer = new OutputStreamWriter(
-                    openFileOutput(
-                            nomFitxer, Activity.MODE_APPEND
-                    )
-            );
-            fitxer.write(s+"\n");
-            fitxer.flush();
-            fitxer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            f.desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
     }
 
     private void ompleTest (){
@@ -167,9 +122,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         preguntes no seran les mateixes i l'ordre en que apareixen serà diferent.
          */
 
-
-
-        String v[] = lligFitxer("historial");
+        String v[] = f.lligFitxer("historial");
         for (String linea : v){
             if (linea.startsWith("[id:")){
                 String s = "\\[id:(\\d+)\\te:(-?1)\\]";
@@ -205,7 +158,8 @@ public class PaginaPrincipal extends AppCompatActivity {
             String exception = "Current stack trace is:\n";
             for (StackTraceElement s : stack)
                 exception += String.format("%s\n\t\t", s.toString());
-            Toast.makeText(this, exception, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, exception, Toast.LENGTH_LONG).show();
+            f.mostraError(exception);
         }
     }
 
