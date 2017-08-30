@@ -138,28 +138,20 @@ public class PaginaPrincipal extends AppCompatActivity {
             }
         }
 
-        try {
-            Random random = new Random();
-            Integer alea;
-            int tots = 0;
-            ArrayList<Integer> llista = new ArrayList<>();
-            int forat = MainActivity.MAX_PREGUNTES - MainActivity.benContestades.size();
-            while (tots <= MainActivity.MAX_PREG_PER_PARTIDA && tots < forat) {
-                alea = random.nextInt(MainActivity.MAX_PREGUNTES);
-                if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
-                    llista.add(alea);
-                    MainActivity.test[tots++] = MainActivity.preguntes[alea];
-                    if (MainActivity.test[tots].getEstat()==-1)
-                        MainActivity.test[tots].setEstat(0);
-                }
+        Random random = new Random();
+        Integer alea;
+        int tots = 0;
+        ArrayList<Integer> llista = new ArrayList<>();
+        int forat = MainActivity.MAX_PREGUNTES - MainActivity.benContestades.size();
+        while (tots < MainActivity.MAX_PREG_PER_PARTIDA && tots < forat) {
+            alea = random.nextInt(MainActivity.MAX_PREGUNTES);
+            if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
+                llista.add(alea);
+                MainActivity.test[tots] = MainActivity.preguntes[alea];
+                if (MainActivity.test[tots] != null && MainActivity.test[tots].getEstat()==-1)
+                    MainActivity.test[tots].setEstat(0);
+                tots++;
             }
-        } catch (Exception e){
-            StackTraceElement[] stack = e.getStackTrace();
-            String exception = "Current stack trace is:\n";
-            for (StackTraceElement s : stack)
-                exception += String.format("%s\n\t\t", s.toString());
-            //Toast.makeText(this, exception, Toast.LENGTH_LONG).show();
-            f.mostraError(exception);
         }
     }
 

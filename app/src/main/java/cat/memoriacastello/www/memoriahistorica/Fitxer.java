@@ -73,7 +73,7 @@ public class Fitxer {
         c.startActivity(i);
     }
 
-    public void mostraError(String text){
+    public void mostraMissatge(String text){
         Intent i = new Intent(c, Notificacio.class);
         i.putExtra("text", text);
         c.startActivity(i);
