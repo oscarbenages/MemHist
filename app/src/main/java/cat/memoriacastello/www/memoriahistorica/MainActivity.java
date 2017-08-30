@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
     //Atributs
     protected static String nomUsuari;
-    protected static int edatUsuari;
       //Vector amb totes les preguntes.
     protected static final int MAX_PREGUNTES = 42;
     protected static DadesPregunta preguntes[] = new DadesPregunta[MAX_PREGUNTES];
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected static ArrayList<Integer> benContestades = new ArrayList<>();
     protected static boolean reset = true;
 
-    private EditText p1et1, p1et2;
+    private EditText p1et1;
 
     //Metodes
     @Override
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         p1et1 = (EditText) findViewById(R.id.p1et1);
-        p1et2 = (EditText) findViewById(R.id.p1et2);
 
         lligDades();
 
@@ -60,17 +58,15 @@ public class MainActivity extends AppCompatActivity {
         String vector[] = lligFitxer("historial");
         for(String línia : vector)
             if (línia.startsWith("[u:")) {
-                String s = "\\[u:(\\w+)\\ta:(\\d+)\\]";
+                String s = "\\[u:(\\w+)\\]";
                 Pattern p = Pattern.compile(s);
                 Matcher m = p.matcher(línia);
-                String usuari = "", edat = "";
+                String usuari = "";
                 while(m.find()){
                     usuari = m.group(1);
-                    edat = m.group(2);
                     break;
                 }
                 p1et1.setText(usuari);
-                p1et2.setText(edat);
                 break;
             }
         if (!vector[vector.length-1].startsWith("[begin:"))
@@ -215,35 +211,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void inicia(View v){
         nomUsuari = p1et1.getText().toString();
-        String s = p1et2.getText().toString();
-        if (s.length() == 0) {
-            String msg = String.format(
-                    "El camp %sde l'edat no %s quedar buid.",
-                    nomUsuari.length()==0 ?
-                            "de l'usuari i el camp " :
-                            "",
-                    nomUsuari.length()==0 ? "poden" :
-                            "pot"
-            );
+        if (nomUsuari.length() == 0){
+
+            String msg = "El camp de l'usuari no pot quedar buid.";
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         } else {
-
-            edatUsuari = Integer.parseInt(s);
-            boolean cond1 = nomUsuari.length() != 0;
-            boolean cond2 = edatUsuari > 13 && edatUsuari < 19;
-
-            if (!cond1 || !cond2){
-                String msg = "";
-                if (!cond1) msg = "El camp de l'usuari no pot quedar buid.";
-                if (!cond2) {
-                    if (msg.length()!=0) msg += "\n";
-                    msg += "L'edat ha de ser entre 14 i 18 anys.";
-                }
-                Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-            } else {
-                Intent i = new Intent(this, PaginaPrincipal.class);
-                startActivity(i);
-            }
+            startActivity(new Intent(this, PaginaPrincipal.class));
         }
     }
 

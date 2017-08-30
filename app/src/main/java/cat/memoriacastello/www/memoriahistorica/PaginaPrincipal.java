@@ -66,7 +66,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         String v[] = lligFitxer("historial");
         String s = v[v.length-1];
         if (s.startsWith("[begin:"))
-            desaFitxer("historial", String.format("[u:%s\ta:%d]", MainActivity.nomUsuari, MainActivity.edatUsuari));
+            desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
     }
 
     @Override
@@ -111,7 +111,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         String v[] = lligFitxer("historial");
         String s = v[v.length-1];
         if (s.startsWith("[begin:"))
-            desaFitxer("historial", String.format("[u:%s\ta:%d]", MainActivity.nomUsuari, MainActivity.edatUsuari));
+            desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
     }
 
     private boolean existix(String f) {
