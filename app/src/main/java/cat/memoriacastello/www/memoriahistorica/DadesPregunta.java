@@ -6,7 +6,7 @@ package cat.memoriacastello.www.memoriahistorica;
 
 public class DadesPregunta {
     //Atributs
-    private int id;
+    private int id; //Id és índex + 1!
     private String enunciat;
     private String resposta1;
     private String resposta2;
@@ -36,6 +36,17 @@ public class DadesPregunta {
         respCorrecta = rC;
         imatge = i;
         estat = 0;
+    }
+
+    public DadesPregunta(DadesPregunta p){
+        id = p.id;
+        enunciat = p.enunciat;
+        resposta1 = p.resposta1;
+        resposta2 = p.resposta2;
+        resposta3 = p.resposta3;
+        respCorrecta = p.respCorrecta;
+        imatge = p.imatge;
+        estat = p.estat;
     }
 
     private String escape(String s){
@@ -73,5 +84,16 @@ public class DadesPregunta {
 
     public int getEstat() {
         return estat;
+    }
+
+    public void neteja() {
+        id = 0;
+        enunciat = null;
+        resposta1 = null;
+        resposta2 = null;
+        resposta3 = null;
+        respCorrecta = 0;
+        imatge = null;
+        estat = 0;
     }
 }

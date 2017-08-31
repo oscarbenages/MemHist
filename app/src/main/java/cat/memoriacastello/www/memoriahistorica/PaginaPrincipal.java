@@ -1,21 +1,15 @@
 package cat.memoriacastello.www.memoriahistorica;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -76,7 +70,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         //Omple el vector de preguntes de forma aleatòria quan comença el joc
         // i en les successives vegades que es prem el botó "REINICIA EL JOC".
         if (MainActivity.reset == true) {
-            ompleTest();
+            omplePartida();
             MainActivity.reset = false;
         }
 
@@ -87,7 +81,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         };
 
         int suma = 0, i = 0;
-        for(DadesPregunta pregunta : MainActivity.test) {
+        for(DadesPregunta pregunta : MainActivity.partida) {
             if (pregunta == null) {
                 botons[i++].setEnabled(false);
                 continue;
@@ -114,13 +108,18 @@ public class PaginaPrincipal extends AppCompatActivity {
             f.desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
     }
 
-    private void ompleTest (){
+    private void omplePartida(){
         /*
         Este procediment ens permet omplir el vector de les preguntes que eixen
         al joc en curs. En total tenim 42 preguntes, però al joc només n'eixen
         20, així cada vegada l'usuari té la sensació de jugar a un nou joc, les
         preguntes no seran les mateixes i l'ordre en que apareixen serà diferent.
          */
+
+        for (int i =0; i < MainActivity.partida.length; i++) {
+            if (MainActivity.partida[i] != null) MainActivity.partida[i].setEstat(0);
+            MainActivity.partida[i] = null;
+        }
 
         String v[] = f.lligFitxer("historial");
         for (String linea : v){
@@ -138,6 +137,7 @@ public class PaginaPrincipal extends AppCompatActivity {
             }
         }
 
+
         Random random = new Random();
         Integer alea;
         int tots = 0;
@@ -147,16 +147,25 @@ public class PaginaPrincipal extends AppCompatActivity {
             alea = random.nextInt(MainActivity.MAX_PREGUNTES);
             if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
                 llista.add(alea);
-                MainActivity.test[tots] = MainActivity.preguntes[alea];
-                if (MainActivity.test[tots] != null && MainActivity.test[tots].getEstat()==-1)
-                    MainActivity.test[tots].setEstat(0);
+                DadesPregunta p = new DadesPregunta(MainActivity.preguntes[alea]);
+                MainActivity.partida[tots] = p;
+                if (MainActivity.partida[tots] != null && MainActivity.partida[tots].getEstat()==-1)
+                    MainActivity.partida[tots].setEstat(0);
                 tots++;
             }
         }
+
+        //TODO: depuració
+        f.mostraMissatge(String.format(
+                "benContestades: %s\n\nllista: %s",
+                MainActivity.benContestades.toString(),
+                llista.toString()
+                )
+        );
     }
 
     public void obre_pregunta(View v, int idx){
-        DadesPregunta pregunta = MainActivity.test[idx];
+        DadesPregunta pregunta = MainActivity.partida[idx];
         if (pregunta.getEstat()==0) {
             Intent i = new Intent(this, Pregunta.class);
             i.putExtra("index", String.valueOf(idx));
@@ -252,5 +261,21 @@ public class PaginaPrincipal extends AppCompatActivity {
 
     public void resultat(View v){
         startActivity(new Intent(this, Resultats.class));
+    }
+
+    public void mostraContingut(View v){
+        //TODO: depuració
+        f.mostraContingut("historial");
+    }
+
+    public void mostraVars(View v){
+        //TODO: depuració
+        String s = MainActivity.benContestades.toString();
+        s += "\n\n partida: [" ;
+        for(DadesPregunta p : MainActivity.partida)
+            if(p != null)
+                s += " " +String.valueOf(p.getId()-1);
+        s +="]";
+        f.mostraMissatge(s);
     }
 }

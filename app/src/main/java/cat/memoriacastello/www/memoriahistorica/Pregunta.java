@@ -1,15 +1,10 @@
 package cat.memoriacastello.www.memoriahistorica;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 public class Pregunta extends AppCompatActivity {
     //Atributs
@@ -36,7 +31,7 @@ public class Pregunta extends AppCompatActivity {
         p3rb2 = (RadioButton) findViewById(R.id.p3rb2);
         p3rb3 = (RadioButton) findViewById(R.id.p3rb3);
 
-        DadesPregunta pregunta = MainActivity.test[index];
+        DadesPregunta pregunta = MainActivity.partida[index];
 
         p3tv1.setText(String.format("[%02d] %s", pregunta.getId(), pregunta.getEnunciat()));
         p3rb1.setText(pregunta.getResposta1());
@@ -63,8 +58,8 @@ public class Pregunta extends AppCompatActivity {
             Frases.anima(this);
             MainActivity.contestades += 1;
         }
-        MainActivity.test[index].setEstat(estat);
-        f.desaFitxer("historial", String.format("[id:%d\te:%d]", MainActivity.test[index].getId(), estat));
+        MainActivity.partida[index].setEstat(estat);
+        f.desaFitxer("historial", String.format("[id:%d\te:%d]", MainActivity.partida[index].getId()-1, estat));
         finish();
     }
 }

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected static DadesPregunta preguntes[] = new DadesPregunta[MAX_PREGUNTES];
       //Vector amb només 20 preg. del joc en curs.
     protected static final int MAX_PREG_PER_PARTIDA = 20;
-    protected static DadesPregunta test[] = new DadesPregunta[MAX_PREG_PER_PARTIDA];
+    protected static DadesPregunta partida[] = new DadesPregunta[MAX_PREG_PER_PARTIDA];
     protected static long horaInici;
     protected static long horaFi;
     protected static int contestades;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         /*
         TODO: fer que després de llegir les dades canvie l'ordre tant de les preguntes com
         de les respostes. Estaria molt bé que n'hi haja més de 20 preguntes, jo en posaria
-        40, encara que cada test només en mostraria 20. Quan es reiniciara el joc canviarien
+        40, encara que cada partida només en mostraria 20. Quan es reiniciara el joc canviarien
         les 20 preguntes. L'únic que sabria les preguntes seria el profe.
 
         TODO: Estaria bé que el profe tinguera un accés especial per a conéixer la resposta a la
@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
     public void inicia(View v){
         nomUsuari = p1et1.getText().toString();
         if (nomUsuari.length() == 0){
-
             String msg = "El camp de l'usuari no pot quedar buid.";
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         } else {
