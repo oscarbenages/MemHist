@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     //Atributs
+    private Fitxer f = new Fitxer(this);
     protected static String nomUsuari;
       //Vector amb totes les preguntes.
     protected static final int MAX_PREGUNTES = 42;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText p1et1;
 
-    Fitxer f = new Fitxer(this);
 
     //Metodes
     @Override
@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         40, encara que cada test només en mostraria 20. Quan es reiniciara el joc canviarien
         les 20 preguntes. L'únic que sabria les preguntes seria el profe.
 
-        TODO: Estaria bé que el profe tinguera un accés especial per a conéixer la resposta a la
-        pregunta.
+        DONE: Estaria bé que el profe tinguera un accés especial per a conéixer la resposta a la
+        pregunta. -Fet: Vista professorat.-
         */
 
         String msg = "";
@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
     public void inicia(View v){
         nomUsuari = p1et1.getText().toString();
         if (nomUsuari.length() == 0){
-
             String msg = "El camp de l'usuari no pot quedar buid.";
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         } else {

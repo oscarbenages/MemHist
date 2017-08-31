@@ -2,23 +2,18 @@ package cat.memoriacastello.www.memoriahistorica;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Resultats extends AppCompatActivity {
     //Atributs
-    private TextView p4tv1;
-
-    //Instància
     Fitxer f = new Fitxer(this);
+    private TextView p4tv1;
 
     //Mètodes
     @Override

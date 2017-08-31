@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -23,12 +20,11 @@ import java.util.regex.Pattern;
 
 public class PaginaPrincipal extends AppCompatActivity {
     //Atributs
+    private Fitxer f = new Fitxer(this);
     private TextView p2tv2;
     private Button p2b1, p2b2, p2b3, p2b4, p2b5, p2b6, p2b7, p2b8, p2b9, p2b10,
             p2b11, p2b12, p2b13, p2b14, p2b15, p2b16, p2b17, p2b18, p2b19, p2b20;
 
-    //Instància
-    Fitxer f = new Fitxer(this);
 
     //Mètodes
     @Override

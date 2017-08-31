@@ -13,6 +13,7 @@ import java.io.OutputStreamWriter;
 
 public class Pregunta extends AppCompatActivity {
     //Atributs
+    private Fitxer f = new Fitxer(this);
     private int index;
     private int respCorr;
     private TextView p3tv1;
@@ -20,8 +21,6 @@ public class Pregunta extends AppCompatActivity {
     private RadioButton p3rb2;
     private RadioButton p3rb3;
 
-    //Instància
-    Fitxer f = new Fitxer(this);
 
     //Mètodes
     @Override
