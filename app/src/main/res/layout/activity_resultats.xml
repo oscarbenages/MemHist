@@ -42,13 +42,13 @@
 
     <Button
         android:id="@+id/p4b2"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
+        android:layout_width="185dp"
+        android:layout_height="55dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
         android:onClick="nova"
-        android:text="Partida Nova"
+        android:text="Preguntes noves"
         app:layout_constraintBottom_toTopOf="@+id/p4b3"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintLeft_creator="1" />
@@ -69,8 +69,8 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="152dp"
-        android:layout_height="49dp"
+        android:layout_width="185dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
@@ -79,6 +79,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p4b3"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_editor_absoluteY="329dp" />
+        tools:layout_constraintTop_creator="1" />
 </android.support.constraint.ConstraintLayout>

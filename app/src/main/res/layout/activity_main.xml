@@ -10,17 +10,22 @@
 
     <TextView
         android:id="@+id/p1tv1"
-        android:layout_width="0dp"
-        android:layout_height="77dp"
-        android:text="Hola,\nIntroduïx el teu nom i edat i comença el concurs."
-        tools:textSize="18sp"
-        android:layout_marginStart="53dp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="36dp"
-        tools:layout_constraintLeft_creator="1"
+        android:layout_width="366dp"
+        android:layout_height="53dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="37dp"
+        android:text="Hola,\nIntroduïx el teu nom i comença el concurs."
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="53dp" />
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
         android:id="@+id/p1et1"

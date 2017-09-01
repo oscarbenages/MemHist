@@ -1,5 +1,7 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+/* view 1 */
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
         p1et1 = (EditText) findViewById(R.id.p1et1);
 
         lligDades();
-
-        f.mostraContingut("historial");
 
         String vector[] = f.lligFitxer("historial");
         for(String línia : vector)

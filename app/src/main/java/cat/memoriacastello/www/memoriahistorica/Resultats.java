@@ -1,5 +1,7 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+/* view 4 */
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,10 +29,6 @@ public class Resultats extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        int suma = MainActivity.benContestades.size();
-        for (DadesPregunta pregunta: MainActivity.partida)
-            if (pregunta != null && pregunta.getEstat()>0) suma += 1;
-
         if (MainActivity.contestades == MainActivity.MAX_PREG_PER_PARTIDA && MainActivity.horaFi == 0)
             MainActivity.horaFi = java.util.Calendar.getInstance().getTimeInMillis();
         long tempsFinal = MainActivity.horaFi == 0 ?
@@ -38,7 +36,7 @@ public class Resultats extends AppCompatActivity {
                 MainActivity.horaFi;
         String temps = obtéDifTemps(tempsFinal, MainActivity.horaInici);
         p4tv1.setText(
-                String.format("Heu obtingut una puntuació de %d punts\nen %s", suma, temps)
+                String.format("Heu obtingut una puntuació de %d punts\nen %s", MainActivity.puntuació, temps)
         );
     }
 
@@ -101,7 +99,19 @@ public class Resultats extends AppCompatActivity {
             MainActivity.partida[i] = null;
         }
         MainActivity.reset = true;
+        MainActivity.benContestades.clear();
+        MainActivity.puntuació = 0;
         f.esborraFitxer("historial");
+        String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
+
+        f.desaFitxer(
+                "historial",
+                String.format(
+                        "[begin:%s]\n[u:%s]",
+                        ara,
+                        MainActivity.nomUsuari
+                )
+        );
         finish();
     }
 

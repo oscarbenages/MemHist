@@ -1,5 +1,7 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+/* view 7 */
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 

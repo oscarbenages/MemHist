@@ -1,5 +1,7 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+/* view 2 */
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -100,7 +102,7 @@ public class PaginaPrincipal extends AppCompatActivity {
             }
             botons[i++].setBackgroundColor(color);
         }
-        p2tv2.setText(String.format("puntuació: %d", suma));
+        p2tv2.setText(String.format("puntuació: %d", MainActivity.puntuació));
 
         String v[] = f.lligFitxer("historial");
         String s = v[v.length-1];
@@ -127,7 +129,7 @@ public class PaginaPrincipal extends AppCompatActivity {
                 String s = "\\[id:(\\d+)\\te:(-?1)\\]";
                 Pattern p = Pattern.compile(s);
                 Matcher m = p.matcher(linea);
-                int estat=0,id=0;
+                int estat=0, id=0;
                 while (m.find()){
                     estat = Integer.parseInt(m.group(2));
                     id = Integer.parseInt(m.group(1));
@@ -147,21 +149,9 @@ public class PaginaPrincipal extends AppCompatActivity {
             alea = random.nextInt(MainActivity.MAX_PREGUNTES);
             if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
                 llista.add(alea);
-                DadesPregunta p = new DadesPregunta(MainActivity.preguntes[alea]);
-                MainActivity.partida[tots] = p;
-                if (MainActivity.partida[tots] != null && MainActivity.partida[tots].getEstat()==-1)
-                    MainActivity.partida[tots].setEstat(0);
-                tots++;
+                MainActivity.partida[tots++] = new DadesPregunta(MainActivity.preguntes[alea]);
             }
         }
-
-        //TODO: depuració
-        f.mostraMissatge(String.format(
-                "benContestades: %s\n\nllista: %s",
-                MainActivity.benContestades.toString(),
-                llista.toString()
-                )
-        );
     }
 
     public void obre_pregunta(View v, int idx){

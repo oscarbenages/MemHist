@@ -1,5 +1,7 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+/* view 3 */
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +54,7 @@ public class Pregunta extends AppCompatActivity {
             estat = 1;
             Frases.felicita(this);
             MainActivity.contestades += 1;
+            MainActivity.puntuació++;
         } else {
             estat = -1;
             Frases.anima(this);
