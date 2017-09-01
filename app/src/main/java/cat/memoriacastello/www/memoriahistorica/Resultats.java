@@ -1,6 +1,5 @@
 package cat.memoriacastello.www.memoriahistorica;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +28,7 @@ public class Resultats extends AppCompatActivity {
         super.onStart();
 
         int suma = MainActivity.benContestades.size();
-        for (DadesPregunta pregunta: MainActivity.test)
+        for (DadesPregunta pregunta: MainActivity.partida)
             if (pregunta != null && pregunta.getEstat()>0) suma += 1;
 
         if (MainActivity.contestades == MainActivity.MAX_PREG_PER_PARTIDA && MainActivity.horaFi == 0)
@@ -91,6 +90,19 @@ public class Resultats extends AppCompatActivity {
 
         startActivity(intent);
         Frases.acomiada(this);
+    }
+
+    public void reinicia(View v){
+        MainActivity.horaInici = java.util.Calendar.getInstance().getTimeInMillis();
+        MainActivity.contestades = 0;
+        for (int i =0; i < MainActivity.partida.length; i++) {
+            if (MainActivity.partida[i] != null)
+                MainActivity.partida[i].neteja();
+            MainActivity.partida[i] = null;
+        }
+        MainActivity.reset = true;
+        f.esborraFitxer("historial");
+        finish();
     }
 
     private String concatena(String vector[]) {

@@ -3,6 +3,7 @@ package cat.memoriacastello.www.memoriahistorica;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -97,6 +98,27 @@ public class Fitxer {
             fitxer.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void esborraFitxer(String f) {
+        String nomFitxer = String.format("%s.txt", f);
+        try {
+            OutputStreamWriter fitxer = new OutputStreamWriter(
+                    c.openFileOutput(
+                            nomFitxer, Activity.MODE_PRIVATE
+                    )
+            );
+            fitxer.write("");
+            fitxer.flush();
+            fitxer.close();
+        } catch (IOException e) {
+            StackTraceElement stack[] = e.getStackTrace();
+            String s = "";
+            for(StackTraceElement t : stack)
+                s +=String.format("\n\t\t%s",t);
+            mostraMissatge(s);
+
         }
     }
 }
