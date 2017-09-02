@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     //Atributs
     private Fitxer f = new Fitxer(this);
     protected static String nomUsuari;
-      //Vector amb totes les preguntes.
+      //Vector amb totes             les preguntes.
     protected static final int MAX_PREGUNTES = 42;
     protected static DadesPregunta preguntes[] = new DadesPregunta[MAX_PREGUNTES];
       //Vector amb només 20 preg. del joc en curs.

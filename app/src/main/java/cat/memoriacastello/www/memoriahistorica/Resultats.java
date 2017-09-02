@@ -2,14 +2,22 @@ package cat.memoriacastello.www.memoriahistorica;
 
 /* view 4 */
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Resultats extends AppCompatActivity {
     //Atributs
@@ -68,7 +76,7 @@ public class Resultats extends AppCompatActivity {
         finish();
     }
 
-    public void surt(View v){
+    public void surt(View v) throws ParseException {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -85,6 +93,33 @@ public class Resultats extends AppCompatActivity {
                         )
                 )
         );
+
+        String usuari = MainActivity.nomUsuari;
+        Calendar c = new GregorianCalendar();
+        int dia = c.get(Calendar.DAY_OF_MONTH);
+        int mes = c.get(Calendar.MONTH);
+        int any = c.get(Calendar.YEAR);
+        int hora = c.get(Calendar.HOUR_OF_DAY);
+        int minut = c.get(Calendar.MINUTE);
+        int segon = c.get(Calendar.SECOND);
+        long marcaTemps = (long) (any * Math.pow(10,10) + mes * Math.pow(10,8) + dia * Math.pow(10,6)
+                + hora * Math.pow(10,4) + minut * Math.pow(10,2) + segon);
+
+
+        int puntuació = MainActivity.puntuació;
+        long temps = java.util.Calendar.getInstance().getTimeInMillis() - MainActivity.horaInici;
+
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+                "BDqualificacions", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        ContentValues registro = new ContentValues();
+        registro.put("data", marcaTemps);
+        registro.put("usuari", usuari);
+        registro.put("puntuació", puntuació);
+        registro.put("temps", temps);
+        bd.insert("qualificacions", null, registro);
+        bd.close();
 
         startActivity(intent);
         Frases.acomiada(this);
@@ -157,5 +192,21 @@ public class Resultats extends AppCompatActivity {
         for (int i = 0; i < vector.length; i++)
             if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], vector[i] != 1 ? unitats_pl[i] : unitats_sg[i]);
         return concatena(resultat);
+    }
+
+    public void mostraBD(View v){
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+                    "BDqualificacions", null, 1);
+            SQLiteDatabase bd = admin.getWritableDatabase();
+            Cursor fila = bd.rawQuery(
+                    "select data,usuari,puntuació,temps from qualificacions where usuari='Oscar'", null);
+            if (fila.moveToLast()) {
+                String u = fila.getString(0);
+                int p = fila.getInt(1);
+                Toast.makeText(this, String.format("%s: %d", u, p), Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(this, "No s'ha trobat cap coincidència",
+                        Toast.LENGTH_SHORT).show();
+            bd.close();
     }
 }

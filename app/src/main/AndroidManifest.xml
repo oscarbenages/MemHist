@@ -34,10 +34,9 @@
             android:name=".Professor"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Historial"
+            android:name=".Notificacio"
             android:screenOrientation="portrait" />
-        <activity android:name=".Notificacio"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".Qualificacions"></activity>
     </application>
 
 </manifest>
