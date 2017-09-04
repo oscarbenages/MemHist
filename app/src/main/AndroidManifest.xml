@@ -36,7 +36,8 @@
         <activity
             android:name=".Notificacio"
             android:screenOrientation="portrait" />
-        <activity android:name=".Qualificacions"></activity>
+        <activity android:name=".Qualificacions" />
+        <activity android:name=".Columnes"></activity>
     </application>
 
 </manifest>

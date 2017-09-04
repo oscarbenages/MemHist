@@ -79,6 +79,15 @@ public class Fitxer {
         Mètode útil per a mostrar missatges extensos
         que no resultarien fàcils de llegir amb un Toast.
         -- Molt apropiat en mode depuració ;) --
+
+        } catch (Exception e) {
+            StackTraceElement ste[] = e.getStackTrace();
+            String s = "";
+            for (StackTraceElement el : ste)
+                s += String.format("\n\t\t%s", el);
+            f.mostraMissatge(s);
+        }
+
         */
         Intent i = new Intent(c, Notificacio.class);
         i.putExtra("text", text);

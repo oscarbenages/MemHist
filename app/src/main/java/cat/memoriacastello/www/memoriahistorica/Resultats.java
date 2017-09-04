@@ -150,7 +150,7 @@ public class Resultats extends AppCompatActivity {
         finish();
     }
 
-    private String concatena(String vector[]) {
+    protected String concatena(String vector[]) {
         /*
          *  Este mètode permet concatenar els elements d'una llista amb la coma
          *  de separador i la conjunció entre el darrer i el penúltim element si s'escau.
@@ -179,7 +179,7 @@ public class Resultats extends AppCompatActivity {
         return sb.toString();
     }
 
-    private String obtéDifTemps(long t1, long t2){
+    protected String obtéDifTemps(long t1, long t2){
         long diff = t1 - t2;
         long vector[] = {
                 diff / (60 * 60 * 1000) % 24,
@@ -191,6 +191,22 @@ public class Resultats extends AppCompatActivity {
         String resultat[] = {null, null, null};
         for (int i = 0; i < vector.length; i++)
             if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], vector[i] != 1 ? unitats_pl[i] : unitats_sg[i]);
+        return concatena(resultat);
+    }
+
+    protected String obtéDifTemps(long t1, long t2, boolean abreujat){
+        long diff = t1 - t2;
+        long vector[] = {
+                diff / (60 * 60 * 1000) % 24,
+                diff / (60 * 1000) % 60,
+                diff / 1000 % 60
+        };
+        String unitats_sg[] = {"hora", "minut", "segon"};
+        String unitats_pl[] = {"hores", "minuts", "segons"};
+        String unitats_abr[] = {"h", "m", "s"};
+        String resultat[] = {null, null, null};
+        for (int i = 0; i < vector.length; i++)
+            if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], !abreujat ? vector[i] != 1 ? unitats_pl[i] : unitats_sg[i] : unitats_abr[i]);
         return concatena(resultat);
     }
 
@@ -209,4 +225,9 @@ public class Resultats extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             bd.close();
     }
+
+    public void qualificacions (View v){
+        startActivity( new Intent(this, Qualificacions.class));
+    }
 }
+
