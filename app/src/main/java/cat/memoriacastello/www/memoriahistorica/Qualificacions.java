@@ -44,18 +44,19 @@ public class Qualificacions extends AppCompatActivity {
 }
 
     private void mostraLlista() {
-        Cursor cursor = assistentBD.classificació("Igor");
+        //Cursor cursor = assistentBD.classificació("Igor");
+        Cursor cursor = assistentBD.mostraBaseDeDades();
         String columnes[] = new String[] {
-                assistentBD.CLAU_DATA,
-                assistentBD.CLAU_USUARI,
-                assistentBD.CLAU_PUNTS,
-                assistentBD.CLAU_TEMPS
+                AdaptadorBD.CLAU_DATA,
+                AdaptadorBD.CLAU_USUARI,
+                AdaptadorBD.CLAU_PUNTS,
+                AdaptadorBD.CLAU_TEMPS
         };
         int columnesXML[] = new int[] {
-                R.id.p9tv1,
-                R.id.p9tv2,
-                R.id.p9tv3,
-                R.id.p9tv4
+                R.id.data,
+                R.id.usuari,
+                R.id.puntuació,
+                R.id.temps
         };
 
         adaptadorDades = new SimpleCursorAdapter(

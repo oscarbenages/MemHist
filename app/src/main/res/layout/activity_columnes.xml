@@ -4,37 +4,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cat.memoriacastello.www.memoriahistorica.Columnes">
+    tools:context="cat.memoriacastello.www.memoriahistorica.Columnes"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
     <TextView
         android:id="@+id/p9tv1"
-        android:layout_width="160dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginStart="34dp"
         android:hint="Data"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="49dp" />
+        android:text="Data:"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/data"
+        app:layout_constraintBaseline_toBaselineOf="@+id/data"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="36dp" />
 
     <TextView
         android:id="@+id/p9tv2"
-        android:layout_width="160dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:hint="Nom"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="73dp" />
+        android:text="Nom:"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/p9tv1"
+        app:layout_constraintBaseline_toBaselineOf="@+id/usuari"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/p9tv1" />
 
     <TextView
         android:id="@+id/p9tv3"
-        android:layout_width="160dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:hint="Puntuació"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="97dp" />
+        android:text="Puntuació:"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/p9tv2"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@+id/p9tv2"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/p9tv2" />
 
     <TextView
         android:id="@+id/p9tv4"
-        android:layout_width="160dp"
-        android:layout_height="18dp"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
         android:hint="Temps"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="125dp" />
+        android:text="Temps:"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/p9tv3"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/p9tv3"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/p9tv3" />
+
+    <TextView
+        android:id="@+id/data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Data"
+        android:layout_marginStart="111dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="49dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="111dp" />
+
+    <TextView
+        android:id="@+id/usuari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Nom"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/data"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/puntuació"
+        android:layout_marginLeft="1dp" />
+
+    <TextView
+        android:id="@+id/puntuació"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Puntuació"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/data"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p9tv3"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/data" />
+
+    <TextView
+        android:id="@+id/temps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:hint="Temps"
+        app:layout_constraintBaseline_toBaselineOf="@+id/p9tv4"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/p9tv4"
+        android:layout_marginLeft="20dp" />
 </android.support.constraint.ConstraintLayout>
