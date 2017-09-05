@@ -1,82 +1,106 @@
 package cat.memoriacastello.www.memoriahistorica;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.Date;
-
-/* view 9 */
+/* view 7 */
 
 public class Qualificacions extends AppCompatActivity {
     //Atributs
-    Fitxer f = new Fitxer(this);
-    ListView p9lv1;
+    private Fitxer f = new Fitxer(this);
+    private Resultats res = new Resultats();
+    private AdaptadorBD assistentBD;
+    private SimpleCursorAdapter adaptadorDades;
+    private ListView p7lv1;
+    private EditText p7et1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Resultats res = new Resultats();
         setContentView(R.layout.activity_qualificacions);
+        assistentBD = new AdaptadorBD(this);
+        assistentBD.obre();
+        try {
+            mostraLlista();
+        } catch (Exception e) {
+            StackTraceElement ste[] = e.getStackTrace();
+            String s = "";
+            for (StackTraceElement el : ste)
+                s += String.format("\n\t\t%s", el);
+            f.mostraMissatge(s);
+        }
 
-                String[] camps = new String[] {"data", "usuari", "puntuació", "temps"};
-            String[] args = new String[] {"Oscar"};
-            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
-                    "BDqualificacions", null, 1);
-            SQLiteDatabase bd = admin.getWritableDatabase();
+}
 
-            Cursor cursor = bd.query(
-                    "qualificacions",
-                    camps, "usuari=?",
-                    args,
-                    /*groupBy*/ null,
-                    /*having*/ null,
-                    /*orderBy*/ "puntuació DESC, temps ASC",
-                    /*limit*/ null
-            );
+    private void mostraLlista() {
+        Cursor cursor = assistentBD.classificació();
+        String columnes[] = new String[] {
+                assistentBD.CLAU_DATA,
+                assistentBD.CLAU_USUARI,
+                assistentBD.CLAU_PUNTS,
+                assistentBD.CLAU_TEMPS
+        };
+        int columnesXML[] = new int[] {
+                R.id.p10tv1,
+                R.id.p10tv2,
+                R.id.p10tv3,
+                R.id.p10tv4
+        };
 
-            //Nos aseguramos de que existe al menos un registro
-            String s1 = "";
+        adaptadorDades = new SimpleCursorAdapter(
+                this,
+                R.layout.activity_columnes,
+                cursor,
+                columnes,
+                columnesXML,
+                0
+        );
 
-            if (cursor.moveToFirst()) {
-                //Recorremos el cursor hasta que no haya más registros
-                do {
-                    long data = cursor.getLong(0);
-                    String usuari = cursor.getString(1);
-                    int puntuació = cursor.getInt(2);
-                    int temps = cursor.getInt(3);
-                    s1 += String.format(
-                            "%s\t%s\t%d p.\t%s\n",
-                            data,
-                            usuari,
-                            puntuació,
-                            res.obtéDifTemps((long) temps, 0, true)
-                    );
-                } while(cursor.moveToNext());
+        p7lv1 = (ListView) findViewById(R.id.p7lv1);
+        p7lv1.setAdapter(adaptadorDades);
+
+        p7lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor cursor = (Cursor) p7lv1.getItemAtPosition(i);
+
+                String usuari = cursor.getString(cursor.getColumnIndexOrThrow("usuari"));
+                Toast.makeText(getApplicationContext(), usuari, Toast.LENGTH_SHORT).show();
             }
-            //f.mostraMissatge(s1);
-            int ids[] = new int[]{R.id.p10tv1, R.id.p10tv2, R.id.p10tv3, R.id.p10tv4};
+        });
 
-            p9lv1 = (ListView) findViewById(R.id.p9lv1);
+        p7et1 = (EditText) findViewById(R.id.p7et1);
+        p7et1.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s){
 
-            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                    this,
-                    R.layout.activity_columnes,
-                    cursor,
-                    camps,
-                    ids,
-                    0
-            );
-            p9lv1.setAdapter(cursorAdapter);
+            }
 
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                adaptadorDades.getFilter().filter(s.toString());
+            }
+        });
+
+        adaptadorDades.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence seq) {
+                return assistentBD.classificació(seq.toString());
+            }
+        });
     }
-
 }

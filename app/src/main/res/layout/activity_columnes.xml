@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/p10tv1"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:layout_editor_absoluteX="34dp"
@@ -16,25 +16,25 @@
 
     <TextView
         android:id="@+id/p10tv2"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="49dp" />
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="73dp" />
 
     <TextView
         android:id="@+id/p10tv3"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="206dp"
-        tools:layout_editor_absoluteY="49dp" />
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="101dp" />
 
     <TextView
         android:id="@+id/p10tv4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="18dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="299dp"
-        tools:layout_editor_absoluteY="49dp" />
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="125dp" />
 </android.support.constraint.ConstraintLayout>
