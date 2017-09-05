@@ -96,7 +96,8 @@ public class AdaptadorBD {
         return fet > 0;
     }
 
-    public boolean esborraRegistesUsuari(String usuaris[]){
+    public boolean esborraRegistesUsuari(String usuari){
+        String [] usuaris = usuari.split(", ?");
         int done = 0;
         done = baseDeDades.delete(NOM_TAULA, "usuari=?", usuaris);
         Log.w(ETIQUETA, Integer.toString(done));
@@ -126,6 +127,20 @@ public class AdaptadorBD {
                 "usuari='Igor' ORDER BY puntuació DESC, temps ASC LIMIT 10;", null
         );
         if (cursor != null) cursor.moveToFirst();
+        return cursor;
+    }
+
+    public Cursor mostraBaseDeDades() {
+        String camps[] = new String[] {"data", "usuari", "puntuació", "temps"};
+        Cursor cursor = baseDeDades.query(
+                NOM_TAULA,
+                camps,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
         return cursor;
     }
 }
