@@ -7,34 +7,34 @@
     tools:context="cat.memoriacastello.www.memoriahistorica.Columnes">
 
     <TextView
-        android:id="@+id/p10tv1"
+        android:id="@+id/p9tv1"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:hint="Data"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="49dp" />
 
     <TextView
-        android:id="@+id/p10tv2"
+        android:id="@+id/p9tv2"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:hint="Nom"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="73dp" />
 
     <TextView
-        android:id="@+id/p10tv3"
+        android:id="@+id/p9tv3"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:hint="Puntuació"
         tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="101dp" />
+        tools:layout_editor_absoluteY="97dp" />
 
     <TextView
-        android:id="@+id/p10tv4"
+        android:id="@+id/p9tv4"
         android:layout_width="160dp"
         android:layout_height="18dp"
-        android:text="TextView"
+        android:hint="Temps"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="125dp" />
 </android.support.constraint.ConstraintLayout>

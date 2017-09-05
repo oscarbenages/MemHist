@@ -44,7 +44,7 @@ public class Qualificacions extends AppCompatActivity {
 }
 
     private void mostraLlista() {
-        Cursor cursor = assistentBD.classificació();
+        Cursor cursor = assistentBD.classificació("Igor");
         String columnes[] = new String[] {
                 assistentBD.CLAU_DATA,
                 assistentBD.CLAU_USUARI,
@@ -52,10 +52,10 @@ public class Qualificacions extends AppCompatActivity {
                 assistentBD.CLAU_TEMPS
         };
         int columnesXML[] = new int[] {
-                R.id.p10tv1,
-                R.id.p10tv2,
-                R.id.p10tv3,
-                R.id.p10tv4
+                R.id.p9tv1,
+                R.id.p9tv2,
+                R.id.p9tv3,
+                R.id.p9tv4
         };
 
         adaptadorDades = new SimpleCursorAdapter(
@@ -71,7 +71,6 @@ public class Qualificacions extends AppCompatActivity {
         p7lv1.setAdapter(adaptadorDades);
 
         p7lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor cursor = (Cursor) p7lv1.getItemAtPosition(i);
 

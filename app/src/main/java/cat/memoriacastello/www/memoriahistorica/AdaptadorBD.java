@@ -2,7 +2,6 @@ package cat.memoriacastello.www.memoriahistorica;
 
 /**
  * Created by coet on 04/09/2017.
- * Adaptat de: www.mysamplecode.com/2012/07/android-listview-cursoradapter-sqlite.html
  */
 
 import android.content.ContentValues;
@@ -107,28 +106,26 @@ public class AdaptadorBD {
     public Cursor classificació(String usuari){
         String usuaris[] = new String[] {usuari};
         String[] camps = new String[] {"data", "usuari", "puntuació", "temps"};
-        Cursor cursor = baseDeDades.rawQuery("SELECT data, usuari, puntuació, temps FROM taula_qualificacions WHERE usuari='Igor' GROUPBY puntuació DESC, temps ASC LIMIT 10;", null);
+        Cursor cursor = baseDeDades.query(
+                NOM_TAULA,
+                camps,
+                "usuari=?",
+                new String[] {usuari},
+                null,
+                null,
+                "puntuació DESC, temps ASC",
+                "10"
+        );
         if (cursor != null) cursor.moveToFirst();
         return cursor;
     }
 
     public Cursor classificació(){
-        Cursor cursor = baseDeDades.rawQuery("SELECT data, usuari, puntuació, temps FROM taula_qualificacions WHERE usuari='Igor' ORDER BY puntuació DESC, temps ASC LIMIT 10;", null);
+        Cursor cursor = baseDeDades.rawQuery(
+                "SELECT data, usuari, puntuació, temps FROM taula_qualificacions WHERE " +
+                "usuari='Igor' ORDER BY puntuació DESC, temps ASC LIMIT 10;", null
+        );
         if (cursor != null) cursor.moveToFirst();
         return cursor;
     }
-
 }
-
-/*
-Cursor cursor = baseDeDades.query(
-                NOM_TAULA,
-                camps,
-                "usuari=?",
-                usuaris,
-                null,
-                null,
-                "puntuació DESC, temps ASC",
-                null
-        );
- */
