@@ -2,22 +2,14 @@ package cat.memoriacastello.www.memoriahistorica;
 
 /* view 4 */
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Resultats extends AppCompatActivity {
     //Atributs
@@ -83,6 +75,7 @@ public class Resultats extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("surt", true);
 
+        Date ara = new Date();
         f.desaFitxer(
                 "historial",
                 String.format(
@@ -90,40 +83,26 @@ public class Resultats extends AppCompatActivity {
                         new SimpleDateFormat(
                                 "yyy/MM/dd HH:mm:ss"
                         ).format(
-                                new Date()
+                                ara
                         )
                 )
         );
 
-        try {
-
-            String usuari = MainActivity.nomUsuari;
-            Calendar c = new GregorianCalendar();
-            int dia = c.get(Calendar.DAY_OF_MONTH);
-            int mes = c.get(Calendar.MONTH);
-            int any = c.get(Calendar.YEAR);
-            int hora = c.get(Calendar.HOUR_OF_DAY);
-            int minut = c.get(Calendar.MINUTE);
-            int segon = c.get(Calendar.SECOND);
-            long marcaTemporal = Long.valueOf(String.format("%s%s%s%s%s%s", any, mes, dia, hora, minut, segon));
-            int puntuació = MainActivity.puntuació;
-            long temps = java.util.Calendar.getInstance().getTimeInMillis() - MainActivity.horaInici;
-            AdaptadorBD baseDeDades = new AdaptadorBD(this);
-            baseDeDades.obre();
-            baseDeDades.nouRegistre(marcaTemporal, usuari, puntuació, temps);
-            baseDeDades.tanca();
-        } catch (Exception e) {
-            StackTraceElement ste[] = e.getStackTrace();
-            String s = "";
-            for (StackTraceElement el : ste)
-                s += String.format("\n\t\t%s", el);
-            f.mostraMissatge(s);
-        }
+        String usuari = MainActivity.nomUsuari;
+        long marcaTemporal = Long.valueOf(new SimpleDateFormat("yyyyMMddHHmmss").format(ara));
+        int puntuació = MainActivity.puntuació;
+        long temps = java.util.Calendar.getInstance().getTimeInMillis() - MainActivity.horaInici;
+        //Date data = new SimpleDateFormat("yyyyMMddHHmmss").parse(String.valueOf(marcaTemporal));
+        AdaptadorBD baseDeDades = new AdaptadorBD(this);
+        baseDeDades.obre();
+        baseDeDades.nouRegistre(marcaTemporal, usuari, puntuació, temps);
+        baseDeDades.tanca();
         startActivity(intent);
         Frases.acomiada(this);
     }
 
     public void reinicia(View v){
+        //TODO: Necessitem que afegisca registres a la BdD!
         MainActivity.horaInici = java.util.Calendar.getInstance().getTimeInMillis();
         MainActivity.contestades = 0;
         for (int i =0; i < MainActivity.partida.length; i++) {
