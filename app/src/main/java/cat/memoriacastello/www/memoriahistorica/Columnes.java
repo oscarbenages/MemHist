@@ -3,6 +3,8 @@ package cat.memoriacastello.www.memoriahistorica;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/* view 9 */
+
 public class Columnes extends AppCompatActivity {
 
     @Override

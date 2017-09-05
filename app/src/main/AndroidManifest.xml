@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--view 1-->
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -18,26 +19,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--view 2-->
         <activity
             android:name=".PaginaPrincipal"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ApropDe"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Pregunta"
-            android:screenOrientation="portrait" />
+        <!--view 3-->
         <activity
             android:name=".Resultats"
             android:screenOrientation="portrait" />
+        <!--view 4-->
+        <activity
+            android:name=".Pregunta"
+            android:screenOrientation="portrait" />
+        <!--view 5-->
+        <activity
+            android:name=".ApropDe"
+            android:screenOrientation="portrait" />
+        <!--view 6-->
         <activity
             android:name=".Professor"
             android:screenOrientation="portrait" />
+        <!--view 7-->
+        <activity
+            android:name=".Qualificacions"
+            android:screenOrientation="portrait" />
+        <!--view 8-->
         <activity
             android:name=".Notificacio"
             android:screenOrientation="portrait" />
-        <activity android:name=".Qualificacions" />
-        <activity android:name=".Columnes"></activity>
+        <!--view 9-->
+        <activity
+            android:name=".Columnes"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -22,6 +22,7 @@ import java.util.GregorianCalendar;
 public class Resultats extends AppCompatActivity {
     //Atributs
     Fitxer f = new Fitxer(this);
+    Cadenes cad = new Cadenes();
     private TextView p4tv1;
 
     //Mètodes
@@ -42,7 +43,7 @@ public class Resultats extends AppCompatActivity {
         long tempsFinal = MainActivity.horaFi == 0 ?
                 java.util.Calendar.getInstance().getTimeInMillis() :
                 MainActivity.horaFi;
-        String temps = obtéDifTemps(tempsFinal, MainActivity.horaInici);
+        String temps = cad.obtéDifTemps(tempsFinal, MainActivity.horaInici);
         p4tv1.setText(
                 String.format("Heu obtingut una puntuació de %d punts\nen %s", MainActivity.puntuació, temps)
         );
@@ -76,7 +77,7 @@ public class Resultats extends AppCompatActivity {
         finish();
     }
 
-    public void surt(View v) throws ParseException {
+    public void surt(View v)  {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -94,33 +95,30 @@ public class Resultats extends AppCompatActivity {
                 )
         );
 
-        String usuari = MainActivity.nomUsuari;
-        Calendar c = new GregorianCalendar();
-        int dia = c.get(Calendar.DAY_OF_MONTH);
-        int mes = c.get(Calendar.MONTH);
-        int any = c.get(Calendar.YEAR);
-        int hora = c.get(Calendar.HOUR_OF_DAY);
-        int minut = c.get(Calendar.MINUTE);
-        int segon = c.get(Calendar.SECOND);
-        long marcaTemps = (long) (any * Math.pow(10,10) + mes * Math.pow(10,8) + dia * Math.pow(10,6)
-                + hora * Math.pow(10,4) + minut * Math.pow(10,2) + segon);
+        try {
 
-
-        int puntuació = MainActivity.puntuació;
-        long temps = java.util.Calendar.getInstance().getTimeInMillis() - MainActivity.horaInici;
-
-
-        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
-                "BDqualificacions", null, 1);
-        SQLiteDatabase bd = admin.getWritableDatabase();
-        ContentValues registro = new ContentValues();
-        registro.put("data", marcaTemps);
-        registro.put("usuari", usuari);
-        registro.put("puntuació", puntuació);
-        registro.put("temps", temps);
-        bd.insert("qualificacions", null, registro);
-        bd.close();
-
+            String usuari = MainActivity.nomUsuari;
+            Calendar c = new GregorianCalendar();
+            int dia = c.get(Calendar.DAY_OF_MONTH);
+            int mes = c.get(Calendar.MONTH);
+            int any = c.get(Calendar.YEAR);
+            int hora = c.get(Calendar.HOUR_OF_DAY);
+            int minut = c.get(Calendar.MINUTE);
+            int segon = c.get(Calendar.SECOND);
+            long marcaTemporal = Long.valueOf(String.format("%s%s%s%s%s%s", any, mes, dia, hora, minut, segon));
+            int puntuació = MainActivity.puntuació;
+            long temps = java.util.Calendar.getInstance().getTimeInMillis() - MainActivity.horaInici;
+            AdaptadorBD baseDeDades = new AdaptadorBD(this);
+            baseDeDades.obre();
+            baseDeDades.nouRegistre(marcaTemporal, usuari, puntuació, temps);
+            baseDeDades.tanca();
+        } catch (Exception e) {
+            StackTraceElement ste[] = e.getStackTrace();
+            String s = "";
+            for (StackTraceElement el : ste)
+                s += String.format("\n\t\t%s", el);
+            f.mostraMissatge(s);
+        }
         startActivity(intent);
         Frases.acomiada(this);
     }
@@ -148,82 +146,6 @@ public class Resultats extends AppCompatActivity {
                 )
         );
         finish();
-    }
-
-    protected String concatena(String vector[]) {
-        /*
-         *  Este mètode permet concatenar els elements d'una llista amb la coma
-         *  de separador i la conjunció entre el darrer i el penúltim element si s'escau.
-         */
-        StringBuilder sb = new StringBuilder();
-        int i = 0, e = 0; //'i' es l'index dels vectors i 'e' és el nombre d'elements no nuls.
-
-        for (String s: vector) {
-            if (s == null) {
-                i++;
-                continue;
-            }
-            e++;
-
-            if (i + 1 == vector.length && e > 1)
-                sb.append(" i ");
-
-            sb.append(s);
-            i++;
-            if (i < vector.length-1)
-                sb.append(", ");
-            else if (i == vector.length)
-                sb.append(".");
-        }
-
-        return sb.toString();
-    }
-
-    protected String obtéDifTemps(long t1, long t2){
-        long diff = t1 - t2;
-        long vector[] = {
-                diff / (60 * 60 * 1000) % 24,
-                diff / (60 * 1000) % 60,
-                diff / 1000 % 60
-        };
-        String unitats_sg[] = {"hora", "minut", "segon"};
-        String unitats_pl[] = {"hores", "minuts", "segons"};
-        String resultat[] = {null, null, null};
-        for (int i = 0; i < vector.length; i++)
-            if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], vector[i] != 1 ? unitats_pl[i] : unitats_sg[i]);
-        return concatena(resultat);
-    }
-
-    protected String obtéDifTemps(long t1, long t2, boolean abreujat){
-        long diff = t1 - t2;
-        long vector[] = {
-                diff / (60 * 60 * 1000) % 24,
-                diff / (60 * 1000) % 60,
-                diff / 1000 % 60
-        };
-        String unitats_sg[] = {"hora", "minut", "segon"};
-        String unitats_pl[] = {"hores", "minuts", "segons"};
-        String unitats_abr[] = {"h", "m", "s"};
-        String resultat[] = {null, null, null};
-        for (int i = 0; i < vector.length; i++)
-            if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], !abreujat ? vector[i] != 1 ? unitats_pl[i] : unitats_sg[i] : unitats_abr[i]);
-        return concatena(resultat);
-    }
-
-    public void mostraBD(View v){
-            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
-                    "BDqualificacions", null, 1);
-            SQLiteDatabase bd = admin.getWritableDatabase();
-            Cursor fila = bd.rawQuery(
-                    "select data,usuari,puntuació,temps from qualificacions where usuari='Oscar'", null);
-            if (fila.moveToLast()) {
-                String u = fila.getString(0);
-                int p = fila.getInt(1);
-                Toast.makeText(this, String.format("%s: %d", u, p), Toast.LENGTH_LONG).show();
-            } else
-                Toast.makeText(this, "No s'ha trobat cap coincidència",
-                        Toast.LENGTH_SHORT).show();
-            bd.close();
     }
 
     public void qualificacions (View v){
