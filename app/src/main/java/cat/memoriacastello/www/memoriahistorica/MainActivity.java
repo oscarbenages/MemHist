@@ -5,6 +5,7 @@ package cat.memoriacastello.www.memoriahistorica;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,12 +30,27 @@ public class MainActivity extends AppCompatActivity {
     protected static int puntuació;
     protected static boolean reset = true;
     private EditText p1et1;
-
+    private static final String ETIQ = "Main";
 
     //Metodes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(ETIQ+"_onCreate", String.format(
+                "usuari %s\npreguntesJoc %s\npreguntesPartida %s\nhoraInici %s\nhoraFi %s\n" +
+                "contestades %s\nbenContestades %s\npuntuació %s\nreset %s",
+                nomUsuari,
+                preguntesJoc.length,
+                preguntesPartida.length,
+                horaInici,
+                horaFi,
+                contestades,
+                benContestades.toString(),
+                puntuació,
+                reset
+                )
+        );
+
         setContentView(R.layout.activity_main);
 
         //Codi per a tancar l'aplicació (relacionada amb el botó 'IX DEL JOC'
@@ -106,6 +122,21 @@ public class MainActivity extends AppCompatActivity {
                 }
                 preguntesJoc[i++] = dp;
             }
+            Log.d(ETIQ+"_lligDades()", String.format(
+                    "usuari %s\npreguntesJoc %s\npreguntesPartida %s\nhoraInici %s\nhoraFi %s\n" +
+                            "contestades %s\nbenContestades %s\npuntuació %s\nreset %s",
+                    nomUsuari,
+                    preguntesJoc.length,
+                    preguntesPartida.length,
+                    horaInici,
+                    horaFi,
+                    contestades,
+                    benContestades.toString(),
+                    puntuació,
+                    reset
+                    )
+            );
+
         } catch (Exception e) {
             msg = "No s'ha pogut accedir al fitxer.";
         }
@@ -117,6 +148,21 @@ public class MainActivity extends AppCompatActivity {
             if (preguntesPartida[i] != null) preguntesPartida[i].neteja();
             preguntesPartida[i] = null;
         }
+        Log.d(ETIQ+"_reiniPregPart()", String.format(
+                "usuari %s\npreguntesJoc %s\npreguntesPartida %s\nhoraInici %s\nhoraFi %s\n" +
+                        "contestades %s\nbenContestades %s\npuntuació %s\nreset %s",
+                nomUsuari,
+                preguntesJoc.length,
+                preguntesPartida.length,
+                horaInici,
+                horaFi,
+                contestades,
+                benContestades.toString(),
+                puntuació,
+                reset
+                )
+        );
+
     }
 
     public void inicia(View v){
@@ -125,6 +171,21 @@ public class MainActivity extends AppCompatActivity {
             String msg = "El camp de l'usuari no pot quedar buid.";
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         } else {
+            Log.d(ETIQ+"_inicia", String.format(
+                    "usuari %s\npreguntesJoc %s\npreguntesPartida %s\nhoraInici %s\nhoraFi %s\n" +
+                            "contestades %s\nbenContestades %s\npuntuació %s\nreset %s",
+                    nomUsuari,
+                    preguntesJoc.length,
+                    preguntesPartida.length,
+                    horaInici,
+                    horaFi,
+                    contestades,
+                    benContestades.toString(),
+                    puntuació,
+                    reset
+                    )
+            );
+
             startActivity(new Intent(this, PaginaPrincipal.class));
         }
     }

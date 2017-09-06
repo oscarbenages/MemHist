@@ -3,7 +3,6 @@ package cat.memoriacastello.www.memoriahistorica;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;

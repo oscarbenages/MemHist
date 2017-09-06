@@ -30,7 +30,9 @@ public class AdaptadorBD {
 
     private final Context mCtx;
 
-    private static final String CREA_BASE_DE_DADES = "CREATE TABLE IF NOT EXISTS taula_qualificacions(data INT PRIMARY KEY, mt_data TEXT, usuari TEXT, puntuació INT, temps INT, cad_temps TEXT)";
+    private static final String CREA_BASE_DE_DADES = "CREATE TABLE IF NOT EXISTS taula_" +
+            "qualificacions(data INT PRIMARY KEY, mt_data TEXT, usuari TEXT, puntuació INT, " +
+            "temps INT, cad_temps TEXT)";
 
     private static class AssistentBD extends SQLiteOpenHelper {
         AssistentBD(Context context) {
@@ -39,13 +41,13 @@ public class AdaptadorBD {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            Log.w(ETIQUETA, CREA_BASE_DE_DADES);
+            Log.d(ETIQUETA, CREA_BASE_DE_DADES);
             db.execSQL(CREA_BASE_DE_DADES);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(ETIQUETA, "Actualitzant base de dades a la versió...");
+            Log.d(ETIQUETA, "Actualitzant base de dades a la versió...");
             //db.execSQL("DROP TABLE IF EXISTS " + NOM_TAULA);
         }
     }
@@ -79,7 +81,7 @@ public class AdaptadorBD {
     public boolean esborraRegistresTaula(){
         int fet = 0;
         fet = baseDeDades.delete(NOM_TAULA, null, null);
-        Log.w(ETIQUETA, Integer.toString(fet));
+        Log.d(ETIQUETA, Integer.toString(fet));
         return fet > 0;
     }
 
@@ -87,12 +89,14 @@ public class AdaptadorBD {
         String [] usuaris = usuari.split(", ?");
         int done = 0;
         done = baseDeDades.delete(NOM_TAULA, "usuari=?", usuaris);
-        Log.w(ETIQUETA, Integer.toString(done));
+        Log.d(ETIQUETA, Integer.toString(done));
         return done > 0;
     }
 
     public Cursor classificació(String usuari){
-        String[] camps = new String[] {"rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"};
+        String[] camps = new String[] {
+                "rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"
+        };
         Cursor cursor = baseDeDades.query(
                 NOM_TAULA,
                 camps,
@@ -108,7 +112,9 @@ public class AdaptadorBD {
     }
 
     public Cursor classificació(){
-        String[] camps = new String[] {"rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"};
+        String[] camps = new String[] {
+                "rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"
+        };
         Cursor cursor = baseDeDades.query(
                 NOM_TAULA,
                 camps,
@@ -124,7 +130,9 @@ public class AdaptadorBD {
     }
 
     public Cursor mostraBaseDeDades() {
-        String camps[] = new String[] {"rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"};
+        String camps[] = new String[] {
+                "rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"
+        };
         Cursor cursor = baseDeDades.query(
                 NOM_TAULA,
                 camps,
