@@ -32,17 +32,8 @@ public class Qualificacions extends AppCompatActivity {
         setContentView(R.layout.activity_qualificacions);
         assistentBD = new AdaptadorBD(this);
         assistentBD.obre();
-        try {
-            mostraLlista();
-        } catch (Exception e) {
-            StackTraceElement ste[] = e.getStackTrace();
-            String s = "";
-            for (StackTraceElement el : ste)
-                s += String.format("\n\t\t%s", el);
-            f.mostraMissatge(s);
-        }
-
-}
+        mostraLlista();
+    }
 
     private void mostraLlista() {
         Cursor cursor = assistentBD.classificació();
@@ -112,7 +103,34 @@ public class Qualificacions extends AppCompatActivity {
 
     }
 
-    private void mostraBaseDeDades(View v){
+    public void mostraBaseDeDades(View v){
+        //TODO: depuració
+        Cursor cursor = assistentBD.mostraBaseDeDades();
+        String columnes[] = new String[]{
+                AdaptadorBD.CLAU_DATA,
+                AdaptadorBD.CLAU_USUARI,
+                AdaptadorBD.CLAU_PUNTS,
+                AdaptadorBD.CLAU_CAD_TEMPS
+        };
 
+        int columnesXML[] = new int[]{
+                R.id.data,
+                R.id.usuari,
+                R.id.puntuació,
+                R.id.cad_temps
+        };
+
+        adaptadorDades = new SimpleCursorAdapter(
+                this,
+                R.layout.activity_columnes,
+                cursor,
+                columnes,
+                columnesXML,
+                0
+        );
+
+        p7lv1 = (ListView) findViewById(R.id.p7lv1);
+        p7lv1.setAdapter(adaptadorDades);
+        Toast.makeText(this, String.format("S'ha reomplert el ListView\nEs mostraran %d registres.", cursor.getCount()), Toast.LENGTH_LONG).show();
     }
 }

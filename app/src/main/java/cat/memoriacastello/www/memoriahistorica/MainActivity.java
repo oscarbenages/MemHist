@@ -9,30 +9,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     //Atributs
     private Fitxer f = new Fitxer(this);
     protected static String nomUsuari;
-      //Vector amb totes             les preguntes.
+      //Vector amb totes les preguntes.
     protected static final int MAX_PREGUNTES = 42;
-    protected static DadesPregunta preguntes[] = new DadesPregunta[MAX_PREGUNTES];
+    protected static DadesPregunta preguntesJoc[] = new DadesPregunta[MAX_PREGUNTES];
       //Vector amb només 20 preg. del joc en curs.
     protected static final int MAX_PREG_PER_PARTIDA = 20;
-    protected static DadesPregunta partida[] = new DadesPregunta[MAX_PREG_PER_PARTIDA];
+    protected static DadesPregunta preguntesPartida[] = new DadesPregunta[MAX_PREG_PER_PARTIDA];
     protected static long horaInici;
     protected static long horaFi;
     protected static int contestades;
     protected static ArrayList<Integer> benContestades = new ArrayList<>();
     protected static int puntuació;
     protected static boolean reset = true;
-    private String darrerUsuari;
     private EditText p1et1;
 
 
@@ -53,36 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
         lligDades();
 
-        String vector[] = f.lligFitxer("historial");
-        for(String línia : vector)
-            if (línia.startsWith("[u:")) {
-                String s = "\\[u:(\\w+)\\]";
-                Pattern p = Pattern.compile(s);
-                Matcher m = p.matcher(línia);
-                while(m.find()){
-                    darrerUsuari = m.group(1);
-                    break;
-                }
-                //break; //Amb break 'habilitat', obtenim el primer usuari que troba a l'historial.
-            }
+        String darrerUsuari = f.obtéDarrerUsuari();
         p1et1.setText(darrerUsuari);
-        if (!vector[vector.length-1].startsWith("[begin:"))
-            f.desaFitxer(
-                    "historial",
-                    String.format(
-                            "[begin:%s]",
-                            new SimpleDateFormat(
-                                    "yyy/MM/dd HH:mm:ss"
-                            ).format(new Date())
-                    )
-            );
+
+        f.afegixHoraInici();
     }
 
     private void lligDades() {
         /*
         TODO: fer que després de llegir les dades canvie l'ordre tant de les preguntes com
         de les respostes. Estaria molt bé que n'hi haja més de 20 preguntes, jo en posaria
-        40, encara que cada partida només en mostraria 20. Quan es reiniciara el joc canviarien
+        40, encara que cada preguntesPartida només en mostraria 20. Quan es reiniciara el joc canviarien
         les 20 preguntes. L'únic que sabria les preguntes seria el profe.
 
         DONE: Estaria bé que el profe tinguera un accés especial per a conéixer la resposta a la
@@ -102,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 if (vector.length < 5 || vector.length > 6) {
                     //Hi ha hagut un error en la construcció de la pregunta
                     //falten o sobren tabulacions.
-                    preguntes[i++] = new DadesPregunta(
+                    preguntesJoc[i++] = new DadesPregunta(
                             i+1,
                             String.format("#ERROR DE LECTURA ([#%d] %d tabs)", i, vector.length),
                             "#resp1",
@@ -128,12 +104,19 @@ public class MainActivity extends AppCompatActivity {
                             i+1, enunciat, resp1, resp2, resp3, iRespCorr, imatge
                     );
                 }
-                preguntes[i++] = dp;
+                preguntesJoc[i++] = dp;
             }
         } catch (Exception e) {
             msg = "No s'ha pogut accedir al fitxer.";
         }
         if (msg.length()>0) Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    protected void reinicialitzaPreguntesPartida(){
+        for (int i = 0; i < preguntesPartida.length; i++) {
+            if (preguntesPartida[i] != null) preguntesPartida[i].neteja();
+            preguntesPartida[i] = null;
+        }
     }
 
     public void inicia(View v){
@@ -149,4 +132,10 @@ public class MainActivity extends AppCompatActivity {
     public void apropDe(View v) {
         startActivity(new Intent(this, ApropDe.class));
     }
+
+    public void qualificacions (View v){
+        startActivity( new Intent(this, Qualificacions.class));
+    }
+
+
 }

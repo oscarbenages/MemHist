@@ -17,7 +17,7 @@ public class Frases {
 
 
     private static List<String> benvingudes = Arrays.asList(
-            //Quan s'inicia el joc i no hi ha preguntes conetestades
+            //Quan s'inicia el joc i no hi ha preguntes contestades
             "Hola %s, comencem!",
             "Hola %s, juguem!",
             "Que comence el joc, %s!"

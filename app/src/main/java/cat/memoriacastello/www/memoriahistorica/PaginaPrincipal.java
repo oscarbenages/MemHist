@@ -11,14 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PaginaPrincipal extends AppCompatActivity {
     //Atributs
+    private MainActivity m = new MainActivity();
     private TextView p2tv2;
     private Button p2b1, p2b2, p2b3, p2b4, p2b5, p2b6, p2b7, p2b8, p2b9, p2b10,
             p2b11, p2b12, p2b13, p2b14, p2b15, p2b16, p2b17, p2b18, p2b19, p2b20;
@@ -59,10 +57,8 @@ public class PaginaPrincipal extends AppCompatActivity {
         if (MainActivity.contestades == 0) Frases.saluda(this);
         else if (MainActivity.contestades != MainActivity.MAX_PREG_PER_PARTIDA) Frases.continua(this);
         else Frases.finalitza(this);
-        String v[] = f.lligFitxer("historial");
-        String s = v[v.length-1];
-        if (s.startsWith("[begin:"))
-            f.desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
+
+        f.afegixUsuari();
     }
 
     @Override
@@ -83,7 +79,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         };
 
         int suma = 0, i = 0;
-        for(DadesPregunta pregunta : MainActivity.partida) {
+        for(DadesPregunta pregunta : MainActivity.preguntesPartida) {
             if (pregunta == null) {
                 botons[i++].setEnabled(false);
                 continue;
@@ -104,10 +100,7 @@ public class PaginaPrincipal extends AppCompatActivity {
         }
         p2tv2.setText(String.format("puntuació: %d", MainActivity.puntuació));
 
-        String v[] = f.lligFitxer("historial");
-        String s = v[v.length-1];
-        if (s.startsWith("[begin:"))
-            f.desaFitxer("historial", String.format("[u:%s]", MainActivity.nomUsuari));
+        f.afegixUsuari();
     }
 
     private void omplePartida(){
@@ -118,54 +111,30 @@ public class PaginaPrincipal extends AppCompatActivity {
         preguntes no seran les mateixes i l'ordre en que apareixen serà diferent.
          */
 
-        for (int i =0; i < MainActivity.partida.length; i++) {
-            if (MainActivity.partida[i] != null) MainActivity.partida[i].setEstat(0);
-            MainActivity.partida[i] = null;
-        }
+        m.reinicialitzaPreguntesPartida();
+        f.actualitzaBenContestades();
+        reomplePreguntesPartida();
+    }
 
-        String v[] = f.lligFitxer("historial");
-        String usuari="";
-        for (String línia : v){
-            if (línia.startsWith("[u:")) {
-                String s = "\\[u:(\\w+)\\]";
-                Pattern p = Pattern.compile(s);
-                Matcher m = p.matcher(línia);
-                while (m.find()) {
-                    usuari = m.group(1);
-                    break;
-                }
-            }
-            if (usuari.equals(MainActivity.nomUsuari) && línia.startsWith("[id:")){
-                String s = "\\[id:(\\d+)\\te:(-?1)\\]";
-                Pattern p = Pattern.compile(s);
-                Matcher m = p.matcher(línia);
-                int estat=0, id=0;
-                while (m.find()){
-                    estat = Integer.parseInt(m.group(2));
-                    id = Integer.parseInt(m.group(1));
-                }
-                if (estat==1 && !MainActivity.benContestades.contains(id))
-                    MainActivity.benContestades.add(id);
-            }
-        }
-
+    private void reomplePreguntesPartida(){
 
         Random random = new Random();
         Integer alea;
-        int tots = 0;
+        int idx = 0;
         ArrayList<Integer> llista = new ArrayList<>();
         int forat = MainActivity.MAX_PREGUNTES - MainActivity.benContestades.size();
-        while (tots < MainActivity.MAX_PREG_PER_PARTIDA && tots < forat) {
+        while (idx < MainActivity.MAX_PREG_PER_PARTIDA && idx < forat) {
             alea = random.nextInt(MainActivity.MAX_PREGUNTES);
             if (!llista.contains(alea) && !MainActivity.benContestades.contains(alea)) {
                 llista.add(alea);
-                MainActivity.partida[tots++] = new DadesPregunta(MainActivity.preguntes[alea]);
+                MainActivity.preguntesPartida[idx++] = new DadesPregunta(MainActivity.preguntesJoc[alea]);
             }
         }
+
     }
 
     public void obre_pregunta(View v, int idx){
-        DadesPregunta pregunta = MainActivity.partida[idx];
+        DadesPregunta pregunta = MainActivity.preguntesPartida[idx];
         if (pregunta.getEstat()==0) {
             Intent i = new Intent(this, Pregunta.class);
             i.putExtra("index", String.valueOf(idx));
@@ -271,8 +240,8 @@ public class PaginaPrincipal extends AppCompatActivity {
     public void mostraVars(View v){
         //TODO: depuració
         String s = MainActivity.benContestades.toString();
-        s += "\n\n partida: [" ;
-        for(DadesPregunta p : MainActivity.partida)
+        s += "\n\n preguntesPartida: [" ;
+        for(DadesPregunta p : MainActivity.preguntesPartida)
             if(p != null)
                 s += " " +String.valueOf(p.getId()-1);
         s +="]";
