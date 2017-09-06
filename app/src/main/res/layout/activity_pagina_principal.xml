@@ -319,15 +319,15 @@
         android:id="@+id/p2b22"
         android:layout_width="95dp"
         android:layout_height="49dp"
-        android:onClick="resultat"
-        android:text="resultat"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="19dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="30dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:onClick="resultat"
+        android:text="opcions"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/p2b21"
-        android:layout_marginLeft="19dp" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <Button
         android:id="@+id/p2b21"

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +17,7 @@ public class Resultats extends AppCompatActivity {
     Fitxer f = new Fitxer(this);
     Cadenes cad = new Cadenes();
     private TextView p4tv1;
+    private long tempsFinal;
 
     //Mètodes
     @Override
@@ -32,7 +34,7 @@ public class Resultats extends AppCompatActivity {
 
         if (MainActivity.contestades == MainActivity.MAX_PREG_PER_PARTIDA && MainActivity.horaFi == 0)
             MainActivity.horaFi = java.util.Calendar.getInstance().getTimeInMillis();
-        long tempsFinal = MainActivity.horaFi == 0 ?
+        tempsFinal = MainActivity.horaFi == 0 ?
                 java.util.Calendar.getInstance().getTimeInMillis() :
                 MainActivity.horaFi;
         String temps = cad.obtéDifTemps(tempsFinal, MainActivity.horaInici);
@@ -54,7 +56,7 @@ public class Resultats extends AppCompatActivity {
         S'ha de modificar la variable reset que indica si estem reiniciat.
          */
 
-        MainActivity.horaInici = java.util.Calendar.getInstance().getTimeInMillis();
+        //MainActivity.horaInici = java.util.Calendar.getInstance().getTimeInMillis();
         MainActivity.contestades = 0;
         MainActivity.reset = true;
         String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
@@ -91,7 +93,7 @@ public class Resultats extends AppCompatActivity {
         String usuari = MainActivity.nomUsuari;
         long marcaTemporal = Long.valueOf(new SimpleDateFormat("yyyyMMddHHmmss").format(ara));
         int puntuació = MainActivity.puntuació;
-        long temps = java.util.Calendar.getInstance().getTimeInMillis() - MainActivity.horaInici;
+        long temps = tempsFinal - MainActivity.horaInici;
         //Date data = new SimpleDateFormat("yyyyMMddHHmmss").parse(String.valueOf(marcaTemporal));
         AdaptadorBD baseDeDades = new AdaptadorBD(this);
         baseDeDades.obre();
@@ -103,32 +105,54 @@ public class Resultats extends AppCompatActivity {
 
     public void reinicia(View v){
         //TODO: Necessitem que afegisca registres a la BdD!
-        MainActivity.horaInici = java.util.Calendar.getInstance().getTimeInMillis();
-        MainActivity.contestades = 0;
-        for (int i =0; i < MainActivity.partida.length; i++) {
-            if (MainActivity.partida[i] != null)
-                MainActivity.partida[i].neteja();
-            MainActivity.partida[i] = null;
-        }
-        MainActivity.reset = true;
-        MainActivity.benContestades.clear();
-        MainActivity.puntuació = 0;
-        f.esborraFitxer("historial");
-        String ara = new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date());
+        try {
+            Date ara = new Date();
+            String usuari = MainActivity.nomUsuari;
+            long marcaTemporal = Long.valueOf(new SimpleDateFormat("yyyyMMddHHmmss").format(ara));
+            int puntuació = MainActivity.puntuació;
+            long temps = tempsFinal - MainActivity.horaInici;
+            AdaptadorBD baseDeDades = new AdaptadorBD(this);
+            baseDeDades.obre();
+            baseDeDades.nouRegistre(marcaTemporal, usuari, puntuació, temps);
+            baseDeDades.tanca();
 
-        f.desaFitxer(
-                "historial",
-                String.format(
-                        "[begin:%s]\n[u:%s]",
-                        ara,
-                        MainActivity.nomUsuari
-                )
-        );
+            MainActivity.horaInici = java.util.Calendar.getInstance().getTimeInMillis();
+            MainActivity.contestades = 0;
+            for (int i =0; i < MainActivity.partida.length; i++) {
+                if (MainActivity.partida[i] != null)
+                    MainActivity.partida[i].neteja();
+                MainActivity.partida[i] = null;
+            }
+            MainActivity.reset = true;
+            MainActivity.benContestades.clear();
+            MainActivity.puntuació = 0;
+            f.esborraFitxer("historial");
+
+            f.desaFitxer(
+                    "historial",
+                    String.format(
+                            "[begin:%s]\n[u:%s]",
+                            new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(ara),
+                            MainActivity.nomUsuari
+                    )
+            );
+        } catch (Exception e) {
+            StackTraceElement ste[] = e.getStackTrace();
+            String s = "";
+            for (StackTraceElement el : ste)
+                s += String.format("\n\t\t%s", el);
+            f.mostraMissatge(s);
+        }
+
         finish();
     }
 
     public void qualificacions (View v){
         startActivity( new Intent(this, Qualificacions.class));
+    }
+
+    public void mostraTemps (View v){
+        Toast.makeText(this, String.valueOf(MainActivity.horaFi), Toast.LENGTH_LONG).show();
     }
 }
 

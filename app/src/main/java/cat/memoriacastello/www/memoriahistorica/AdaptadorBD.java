@@ -64,33 +64,15 @@ public class AdaptadorBD {
         if (assistentBD != null) assistentBD.close();
     }
 
-    public long nouRegistre(String data, String usuari, String puntuació, String temps) {
+
+    public long nouRegistre(long data, String usuari, int puntuació, long temps) {
         ContentValues initValues = new ContentValues();
-        initValues.put(CLAU_DATA, data);
-        initValues.put(CLAU_MT_DATA, cad.formataDataCurta(data));
+        initValues.put(CLAU_MT_DATA, data);
+        initValues.put(CLAU_DATA, cad.formataDataCurta(String.valueOf(data)));
         initValues.put(CLAU_USUARI, usuari);
         initValues.put(CLAU_PUNTS, puntuació);
         initValues.put(CLAU_TEMPS, temps);
         initValues.put(CLAU_CAD_TEMPS, cad.obtéDifTemps(Long.valueOf(temps), 0 ,true));
-        return baseDeDades.insert(NOM_TAULA, null, initValues);
-    }
-
-    public long nouRegistre(long data, String usuari, int puntuació, long temps) {
-        String cadData = String.valueOf(data);
-        cadData = String.format(
-                "%3$s/%2$s/%1$s %4$s:%5$s",
-                cadData.substring(0, 4), //any
-                cadData.substring(3, 6), //mes
-                cadData.substring(5, 8), //dia
-                cadData.substring(7, 10), //hora
-                cadData.substring(9, 12) //minut
-
-        );
-        ContentValues initValues = new ContentValues();
-        initValues.put(CLAU_DATA, data);
-        initValues.put(CLAU_USUARI, usuari);
-        initValues.put(CLAU_PUNTS, puntuació);
-        initValues.put(CLAU_TEMPS, temps);
         return baseDeDades.insert(NOM_TAULA, null, initValues);
     }
 
@@ -110,13 +92,12 @@ public class AdaptadorBD {
     }
 
     public Cursor classificació(String usuari){
-        String usuaris[] = new String[] {usuari};
-        String[] camps = new String[] {"rowid as _id", "data", "usuari", "puntuació", "temps"};
+        String[] camps = new String[] {"rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"};
         Cursor cursor = baseDeDades.query(
                 NOM_TAULA,
                 camps,
-                "usuari=?",
-                new String[] {usuari},
+                "usuari like ?",
+                new String[] {String.format("%%%s%%", usuari)},
                 null,
                 null,
                 "puntuació DESC, temps ASC",
@@ -127,16 +108,23 @@ public class AdaptadorBD {
     }
 
     public Cursor classificació(){
-        Cursor cursor = baseDeDades.rawQuery(
-                "SELECT data, usuari, puntuació, temps FROM taula_qualificacions WHERE " +
-                "usuari='Igor' ORDER BY puntuació DESC, temps ASC LIMIT 10;", null
+        String[] camps = new String[] {"rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"};
+        Cursor cursor = baseDeDades.query(
+                NOM_TAULA,
+                camps,
+                null,
+                null,
+                null,
+                null,
+                "puntuació DESC, temps ASC",
+                "10"
         );
         if (cursor != null) cursor.moveToFirst();
         return cursor;
     }
 
     public Cursor mostraBaseDeDades() {
-        String camps[] = new String[] {"rowid as _id", "data", "usuari", "puntuació", "temps"};
+        String camps[] = new String[] {"rowid as _id", "data", "mt_data", "usuari", "puntuació", "temps", "cad_temps"};
         Cursor cursor = baseDeDades.query(
                 NOM_TAULA,
                 camps,

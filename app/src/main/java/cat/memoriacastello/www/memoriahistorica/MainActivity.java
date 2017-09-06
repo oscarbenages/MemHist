@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected static ArrayList<Integer> benContestades = new ArrayList<>();
     protected static int puntuació;
     protected static boolean reset = true;
-
+    private String darrerUsuari;
     private EditText p1et1;
 
 
@@ -59,14 +59,13 @@ public class MainActivity extends AppCompatActivity {
                 String s = "\\[u:(\\w+)\\]";
                 Pattern p = Pattern.compile(s);
                 Matcher m = p.matcher(línia);
-                String usuari = "";
                 while(m.find()){
-                    usuari = m.group(1);
+                    darrerUsuari = m.group(1);
                     break;
                 }
-                p1et1.setText(usuari);
-                break;
+                //break; //Amb break 'habilitat', obtenim el primer usuari que troba a l'historial.
             }
+        p1et1.setText(darrerUsuari);
         if (!vector[vector.length-1].startsWith("[begin:"))
             f.desaFitxer(
                     "historial",

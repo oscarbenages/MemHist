@@ -124,11 +124,21 @@ public class PaginaPrincipal extends AppCompatActivity {
         }
 
         String v[] = f.lligFitxer("historial");
-        for (String linea : v){
-            if (linea.startsWith("[id:")){
+        String usuari="";
+        for (String línia : v){
+            if (línia.startsWith("[u:")) {
+                String s = "\\[u:(\\w+)\\]";
+                Pattern p = Pattern.compile(s);
+                Matcher m = p.matcher(línia);
+                while (m.find()) {
+                    usuari = m.group(1);
+                    break;
+                }
+            }
+            if (usuari.equals(MainActivity.nomUsuari) && línia.startsWith("[id:")){
                 String s = "\\[id:(\\d+)\\te:(-?1)\\]";
                 Pattern p = Pattern.compile(s);
-                Matcher m = p.matcher(linea);
+                Matcher m = p.matcher(línia);
                 int estat=0, id=0;
                 while (m.find()){
                     estat = Integer.parseInt(m.group(2));

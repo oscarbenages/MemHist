@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -46,17 +45,16 @@ public class Qualificacions extends AppCompatActivity {
 }
 
     private void mostraLlista() {
-        //Cursor cursor = assistentBD.classificació("Igor");
-        Cursor cursor = assistentBD.mostraBaseDeDades();
+        Cursor cursor = assistentBD.classificació();
         String columnes[] = new String[]{
-                AdaptadorBD.CLAU_MT_DATA,
+                AdaptadorBD.CLAU_DATA,
                 AdaptadorBD.CLAU_USUARI,
                 AdaptadorBD.CLAU_PUNTS,
                 AdaptadorBD.CLAU_CAD_TEMPS
         };
 
         int columnesXML[] = new int[]{
-                R.id.mt_data,
+                R.id.data,
                 R.id.usuari,
                 R.id.puntuació,
                 R.id.cad_temps
@@ -78,42 +76,43 @@ public class Qualificacions extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor cursor = (Cursor) p7lv1.getItemAtPosition(i);
 
-                String data = cursor.getString(cursor.getColumnIndexOrThrow("mt_data"));
-                long temps = Long.valueOf(
-                        cursor.getString(cursor.getColumnIndexOrThrow("cad_temps"))
-                );
                 String msg = String.format(
                         "%s:\n\t%s\n\t%s\n\t%s",
                         cursor.getString(cursor.getColumnIndexOrThrow("usuari")),
-                        cad.formataDataCurta(data),
+                        cursor.getString(cursor.getColumnIndexOrThrow("data")),
                         cursor.getString(cursor.getColumnIndexOrThrow("puntuació")),
-                        cad.obtéDifTemps(temps, 0, true)
+                        cursor.getString(cursor.getColumnIndexOrThrow("cad_temps"))
                 );
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
 
-        p7et1 = (EditText) findViewById(R.id.p7et1);
-        p7et1.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
+            p7et1 = (EditText) findViewById(R.id.p7et1);
+            p7et1.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {
 
-            }
+                }
 
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
+                public void beforeTextChanged(CharSequence s, int start,
+                                              int count, int after) {
+                }
 
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                adaptadorDades.getFilter().filter(s.toString());
-            }
-        });
+                public void onTextChanged(CharSequence s, int start,
+                                          int before, int count) {
+                    adaptadorDades.getFilter().filter(s.toString());
+                }
+            });
 
-        adaptadorDades.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence seq) {
-                return assistentBD.classificació(seq.toString());
-            }
-        });
+            adaptadorDades.setFilterQueryProvider(new FilterQueryProvider() {
+                @Override
+                public Cursor runQuery(CharSequence seq) {
+                    return assistentBD.classificació(seq.toString());
+                }
+            });
+
+    }
+
+    private void mostraBaseDeDades(View v){
+
     }
 }
