@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 public class Qualificacions extends AppCompatActivity {
     //Atributs
     private Fitxer f = new Fitxer(this);
+    private Cadenes cad = new Cadenes();
     private Resultats res = new Resultats();
     private AdaptadorBD assistentBD;
     private SimpleCursorAdapter adaptadorDades;
@@ -46,17 +48,18 @@ public class Qualificacions extends AppCompatActivity {
     private void mostraLlista() {
         //Cursor cursor = assistentBD.classificació("Igor");
         Cursor cursor = assistentBD.mostraBaseDeDades();
-        String columnes[] = new String[] {
-                AdaptadorBD.CLAU_DATA,
+        String columnes[] = new String[]{
+                AdaptadorBD.CLAU_MT_DATA,
                 AdaptadorBD.CLAU_USUARI,
                 AdaptadorBD.CLAU_PUNTS,
-                AdaptadorBD.CLAU_TEMPS
+                AdaptadorBD.CLAU_CAD_TEMPS
         };
-        int columnesXML[] = new int[] {
-                R.id.data,
+
+        int columnesXML[] = new int[]{
+                R.id.mt_data,
                 R.id.usuari,
                 R.id.puntuació,
-                R.id.temps
+                R.id.cad_temps
         };
 
         adaptadorDades = new SimpleCursorAdapter(
@@ -75,14 +78,24 @@ public class Qualificacions extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor cursor = (Cursor) p7lv1.getItemAtPosition(i);
 
-                String usuari = cursor.getString(cursor.getColumnIndexOrThrow("usuari"));
-                Toast.makeText(getApplicationContext(), usuari, Toast.LENGTH_SHORT).show();
+                String data = cursor.getString(cursor.getColumnIndexOrThrow("mt_data"));
+                long temps = Long.valueOf(
+                        cursor.getString(cursor.getColumnIndexOrThrow("cad_temps"))
+                );
+                String msg = String.format(
+                        "%s:\n\t%s\n\t%s\n\t%s",
+                        cursor.getString(cursor.getColumnIndexOrThrow("usuari")),
+                        cad.formataDataCurta(data),
+                        cursor.getString(cursor.getColumnIndexOrThrow("puntuació")),
+                        cad.obtéDifTemps(temps, 0, true)
+                );
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
 
         p7et1 = (EditText) findViewById(R.id.p7et1);
         p7et1.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s){
+            public void afterTextChanged(Editable s) {
 
             }
 

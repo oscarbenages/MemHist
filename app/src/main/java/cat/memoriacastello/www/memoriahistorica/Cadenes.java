@@ -1,5 +1,9 @@
 package cat.memoriacastello.www.memoriahistorica;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by coet on 05/09/2017.
  */
@@ -63,6 +67,17 @@ public class Cadenes {
         for (int i = 0; i < vector.length; i++)
             if (vector[i]>0) resultat[i] = String.format("%d %s", vector[i], !abreujat ? vector[i] != 1 ? unitats_pl[i] : unitats_sg[i] : unitats_abr[i]);
         return concatena(resultat);
+    }
+
+     protected String formataDataCurta(String data){
+         String cadData = "";
+         try {
+             Date dataD = new SimpleDateFormat("yyyyMMddHHmmss").parse(data);
+             cadData = new SimpleDateFormat("dd/MM/yy HH:mm").format(dataD);
+         } catch (ParseException e) {
+             e.printStackTrace();
+         }
+         return cadData;
     }
 
 }

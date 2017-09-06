@@ -80,6 +80,9 @@ public class Fitxer {
         que no resultarien fàcils de llegir amb un Toast.
         -- Molt apropiat en mode depuració ;) --
 
+        } catch (RuntimeException e) {
+            //Log.e("Circle", e.toString(), e);
+            f.mostraMissatge(e.toString());
         } catch (Exception e) {
             StackTraceElement ste[] = e.getStackTrace();
             String s = "";

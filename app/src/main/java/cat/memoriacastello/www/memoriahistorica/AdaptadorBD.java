@@ -13,10 +13,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class AdaptadorBD {
+    Cadenes cad = new Cadenes();
     public static final String CLAU_DATA = "data";
+    public static final String CLAU_MT_DATA = "mt_data";
     public static final String CLAU_USUARI = "usuari";
     public static final String CLAU_PUNTS = "puntuació";
     public static final String CLAU_TEMPS = "temps";
+    public static final String CLAU_CAD_TEMPS = "cad_temps";
 
     private  static final String ETIQUETA = "AdaptadorBD";
     private AssistentBD assistentBD;
@@ -27,7 +30,7 @@ public class AdaptadorBD {
 
     private final Context mCtx;
 
-    private static final String CREA_BASE_DE_DADES = "CREATE TABLE IF NOT EXISTS taula_qualificacions(data INT PRIMARY KEY, usuari TEXT, puntuació INT, temps INT)";
+    private static final String CREA_BASE_DE_DADES = "CREATE TABLE IF NOT EXISTS taula_qualificacions(data INT PRIMARY KEY, mt_data TEXT, usuari TEXT, puntuació INT, temps INT, cad_temps TEXT)";
 
     private static class AssistentBD extends SQLiteOpenHelper {
         AssistentBD(Context context) {
@@ -64,9 +67,11 @@ public class AdaptadorBD {
     public long nouRegistre(String data, String usuari, String puntuació, String temps) {
         ContentValues initValues = new ContentValues();
         initValues.put(CLAU_DATA, data);
+        initValues.put(CLAU_MT_DATA, cad.formataDataCurta(data));
         initValues.put(CLAU_USUARI, usuari);
         initValues.put(CLAU_PUNTS, puntuació);
         initValues.put(CLAU_TEMPS, temps);
+        initValues.put(CLAU_CAD_TEMPS, cad.obtéDifTemps(Long.valueOf(temps), 0 ,true));
         return baseDeDades.insert(NOM_TAULA, null, initValues);
     }
 
@@ -106,7 +111,7 @@ public class AdaptadorBD {
 
     public Cursor classificació(String usuari){
         String usuaris[] = new String[] {usuari};
-        String[] camps = new String[] {"data", "usuari", "puntuació", "temps"};
+        String[] camps = new String[] {"rowid as _id", "data", "usuari", "puntuació", "temps"};
         Cursor cursor = baseDeDades.query(
                 NOM_TAULA,
                 camps,
@@ -131,7 +136,7 @@ public class AdaptadorBD {
     }
 
     public Cursor mostraBaseDeDades() {
-        String camps[] = new String[] {"data", "usuari", "puntuació", "temps"};
+        String camps[] = new String[] {"rowid as _id", "data", "usuari", "puntuació", "temps"};
         Cursor cursor = baseDeDades.query(
                 NOM_TAULA,
                 camps,
